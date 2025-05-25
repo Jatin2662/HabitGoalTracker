@@ -1,0 +1,82 @@
+
+
+.flex-col {
+    display: flex;
+    flex-direction: column;
+    color: var(--text-primary);
+}
+
+
+.user-settings {
+    box-sizing: border-box;
+    max-width: 800px;
+    align-items: center;
+    padding: 30px;
+}
+
+.personal-details,
+.personal-details form,
+.personal-details div,
+.save-button-container,
+.myTheme {
+    max-width: 600px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.personal-details {
+    gap: 25px;
+    border-bottom: 1px solid var(--border);
+    /* background-color: antiquewhite; */
+    padding: 20px 0;
+}
+
+.personal-details form {
+    gap: 25px;
+}
+
+.personal-details form input {
+    height: 30px;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding-left: 5px;
+}
+
+.personal-details div,
+.myTheme {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.myTheme{
+    border-bottom: 1px solid var(--border);
+    /* background-color: antiquewhite; */
+    padding: 20px 0;
+}
+
+.save-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.us-btn{
+    background-color: var(--btn-bg-color);
+    color: var(--font-color);
+    border: none;
+    border-radius: 5px;
+    padding: 7px;
+    font-size: 1.1em;
+    cursor: pointer;
+}
+
+.us-btn:disabled, .us-btn:disabled:hover{
+    background-color: rgb(135, 135, 135);
+    color: black;
+    cursor: no-drop;
+}
+
+.us-btn:hover{
+    background-color: rgb(47, 158, 255);
+}

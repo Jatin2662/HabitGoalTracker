@@ -1,0 +1,39 @@
+
+
+.dashboard-nav{
+    height: 7vh;
+    /* border-bottom: 2px solid #444; */
+    border-bottom: 2px solid var(--border);
+    color: var(--text-primary);
+    font-size: 1.3em;
+    font-weight: 600;
+}
+
+.dashboard-content{
+    padding: 12px;
+}
+
+.dashboard-cards{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+.dashboard-card {
+    background-color: var(--surface);
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+}
+
+.dashboard-card h1 {
+    font-size: 1.2em;
+    color: var(--text-primary);
+}
+
+.dashboard-card p {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: var(--primary);
+}

@@ -1,0 +1,90 @@
+.habits-content {
+  padding: 7px;
+}
+
+.habits-content-head {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  color: var(--text-primary);
+}
+
+.habits-content-head button {
+  background-color: var(--btn-bg-color);
+  color: var(--font-color);
+  border: none;
+  padding: 10px;
+  font-size: 1em;
+  font-weight: 600;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.habits-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+  padding: 10px;
+  color: var(--text-primary);
+}
+
+.habit-card {
+  background-color: var(--surface);
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+}
+
+.habit-card h3 {
+  font-size: 18px;
+  /* margin-bottom: 8px; */
+  text-align: center;
+}
+
+.habit-card div {
+  /* height: 1em; */
+  font-size: 17px;
+  display: flex;
+  gap: 7px;
+}
+
+.c-t {
+  font-weight: 700;
+}
+
+.habit-actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.edit-icon,
+.delete-icon {
+  cursor: pointer;
+  font-size: 21px;
+  color: #007bff;
+}
+
+.edit-icon:hover {
+  color: #0056b3;
+}
+
+.delete-icon:hover {
+  color: #dc3545;
+}
+
+@media (max-width: 768px) {
+  .habit-card {
+    padding: 12px;
+  }
+
+  .habit-card h3 {
+    font-size: 16px;
+  }
+
+  .habit-card div {
+    font-size: 13px;
+  }
+}

@@ -1,0 +1,144 @@
+.habitForm-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 343;
+    overflow-y: auto;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* important: flex-start not center */
+    overflow-y: auto;
+}
+
+.habitForm {
+    width: 80%;
+    max-width: 500px;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    /* align-items: center;
+    justify-content: center; */
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 12px;
+    max-height: 90vh;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+.habitForm-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* width: 100%; */
+}
+
+.habitForm-header button {
+    padding: 6px 12px;
+    font-size: 1em;
+    background-color: var(--btn-bg-color);
+    color: var(--font-color);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.habitForm form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    /* width: 80%; */
+}
+
+.habitForm-input {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.habitForm label {
+    font-size: 1.1em;
+    font-weight: 600;
+}
+
+.habitForm-input input,
+.habitForm-input select {
+    height: 35px;
+    border-radius: 6px;
+    padding: 0 10px;
+    border: 1px solid #ccc;
+}
+
+.habitForm-input .day-selector {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 8px;
+}
+
+.habitForm-input .day-selector label {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 1em;
+    font-weight: 500;
+}
+
+.habitForm-radio {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.habitForm button[type="submit"] {
+    padding: 10px 16px;
+    font-size: 1em;
+    background-color: var(--btn-bg-color);
+    color: var(--font-color);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 495px) {
+    .habitForm-radio {
+        flex-direction: column;
+    }
+
+    .habitForm {
+        width: 90%;
+        padding: 15px;
+        max-height: 80vh;
+    }
+
+    .habitForm-input .day-selector {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .habitForm-input .day-selector label {
+        font-size: 0.9em;
+    }
+
+    .habitForm-input .day-selector input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+
+
+.habitForm::-webkit-scrollbar {
+  width: 5px;
+}
+
+.habitForm::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.habitForm::-webkit-scrollbar-thumb {
+  background: #c4c4c4;
+  border-radius: 4px;
+}

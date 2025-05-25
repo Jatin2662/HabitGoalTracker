@@ -1,0 +1,43 @@
+
+
+.contact {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(94, 94, 94, 0.5);
+    color: #023e8a;
+}
+
+.contact-overlay {
+    max-width: 400px;
+    width: 50%;
+    background-color: rgb(187, 236, 255);
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    padding: 10px;
+    border-radius: 7px;
+}
+
+.c-o-h{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.contact-overlay div{
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    gap: 7px;
+    padding: 10px;
+}
+
+.contact-overlay svg {
+    font-size: 20px;
+    vertical-align: middle;
+}

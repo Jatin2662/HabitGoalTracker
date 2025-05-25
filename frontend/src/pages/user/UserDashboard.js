@@ -1,0 +1,99 @@
+
+
+
+import React, { useEffect } from "react";
+import '../../styles/UserDashboard.css';
+import { Navigate, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { showToast } from "../../redux/slice/toastSlice";
+import { useState } from "react";
+
+function UserDashboard() {
+
+    const userName = localStorage.getItem('loggedInUser') || 'Logger';
+    const dispatch = useDispatch();
+    const theme = useSelector((state) => state.theme.theme)
+    console.log("Dashboard -> ", theme);
+    const [count, setCount] = useState(0)
+    // const navigate = useNavigate();
+
+    const cardTitle = [
+        {
+            id: 1,
+            title: 'Streak',
+            data: 'Static'
+        },
+        {
+            id: 2,
+            title: 'Total habits',
+            data: count
+        },
+        {
+            id: 3,
+            title: 'Overall completion Rate',
+            data: 'Static'
+        },
+        {
+            id: 4,
+            title: "Today's Progress",
+            data: 'Static'
+        },
+        {
+            id: 5,
+            title: 'Weekly summary',
+            data: 'Static'
+        }
+    ]
+
+    // const logout = ()=>{
+    //     localStorage.clear();
+
+    //     navigate('/', {replace: true})
+    // }
+
+    const getData = async () => {
+
+        try {
+            const url = 'http://localhost:8080/user/user-dashboard'
+            const headers = {
+                headers: {
+                    'Authorization': localStorage.getItem('token')
+                }
+            }
+            const response = await axios.get(url, headers);
+
+            const { message, success, count } = response.data;
+
+            setCount(count);
+            dispatch(showToast({ message: message, type: success ? "success" : "error" }))
+
+        } catch (err) {
+            dispatch(showToast({ message: err.response?.data?.message, type: "error" }))
+        }
+    }
+
+    useEffect(() => {
+        getData();
+        // const theme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', theme)
+    }, [theme])
+
+    return (
+        <>
+            <nav className="dashboard-nav centered">{userName + `'s`} Dashboard</nav>
+            <main className="dashboard-content">
+                <section className="dashboard-cards">
+                    {cardTitle.map((ct) => (
+                        <div className="dashboard-card" key={ct.id} >
+                            <h1>{ct.title}</h1>
+                            <p>{ct.data}</p>
+                        </div>
+                    ))}
+                </section>
+            </main>
+        </>
+    );
+}
+
+export default UserDashboard;

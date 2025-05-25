@@ -1,0 +1,39 @@
+
+
+:root {
+    --font-color: white;
+    --btn-bg-color: #0077b6;
+    --bg: #F8FAFC;
+    --surface: #FFFFFF;
+    --text-primary: #1E293B;
+    --text-secondary: #475569;
+    --primary: #3B82F6;
+    --border: #334155; 
+
+    --nav-color: black;
+    --bg-color: rgb(127, 219, 255);
+}
+
+[data-theme="dark"] {
+    --font-color: white;
+    --btn-bg-color: #0077b6;
+    --bg: #0F172A;
+    --surface: #1E293B;
+    --text-primary: #F1F5F9;
+    --text-secondary: #94A3B8;
+    --primary: #3B82F6;
+    --border: #E2E8F0;
+}
+
+.flex-row-spe {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.flex-col-spe {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
