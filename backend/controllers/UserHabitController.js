@@ -1,5 +1,51 @@
+const HabitLogModel = require("../models/HabitLogModel");
 const HabitModel = require("../models/HabitModel");
 const UserModel = require("../models/UserModel");
+
+
+
+
+function generateHabitLogs(habit) {
+  const { repeat, custom_repeat, startDate, endDate } = habit;
+
+  const dayMap = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+  const repeatDays = (custom_repeat || []).map(day => dayMap[day]);
+  const logs = [];
+
+  const start = new Date(startDate);
+  const end = endDate ? new Date(endDate) : new Date(start.getTime() + 30 * 86400000);
+
+  for (let current = new Date(start); current <= end; current.setDate(current.getDate() + 1)) {
+    const day = current.getDay();
+    let include = false;
+
+    switch (repeat) {
+      case 'daily':
+        include = true; break;
+      case 'weekly':
+        include = day === start.getDay(); break;
+      case 'monthly':
+        include = current.getDate() === start.getDate(); break;
+      case 'weekdays':
+        include = day >= 1 && day <= 5; break;
+      case 'weekends':
+        include = day === 0 || day === 6; break;
+      case 'custom':
+        include = repeatDays.includes(day); break;
+    }
+
+    if (include) {
+      logs.push({
+        userId: habit.userId,
+        habitId: habit._id,
+        date: new Date(current),
+        status: 'pending'
+      });
+    }
+  }
+
+  return logs;
+}
 
 
 const addHabit = async (req, res, next) => {
@@ -11,6 +57,10 @@ const addHabit = async (req, res, next) => {
 
         const newHabit = new HabitModel({ userId, habit, habitDescription, repeat, custom_repeat, startDate, endDate: endDate || null, state });
         await newHabit.save()
+
+        const logs = generateHabitLogs(newHabit);
+
+        await HabitLogModel.insertMany(logs);
 
         res.status(200).json({ message: "Your new Habit added successfully!!!", success: true })
     } catch (err) {
@@ -154,6 +204,10 @@ module.exports = {
     updateUserSettings,
     getHabitCount
 }
+
+
+
+
 
 
 
