@@ -11,7 +11,7 @@ function UserTrack() {
     { habit: "Workout", date: "2025-05-23", done: true },
     { habit: "Meditate", date: "2025-05-23", done: false },
     { habit: "Read", date: "2025-05-24", done: true },
-    { habit: "Workout", date: "2025-05-24", done: true },
+    { habit: "Work", date: "2025-05-24", done: true },
     { habit: "Workout", date: "2025-05-25", done: false },
   ]);
 
@@ -24,7 +24,7 @@ function UserTrack() {
   const events = useMemo(() => {
     return habitLogs.map((log, index) => ({
       id: index,
-      title: `${log.habit} - ${log.done ? "✅" : "❌"}`,
+      title: `${log.habit} - ${log.done ? "Done" : "Missed"}`,
       start: new Date(log.date),
       end: new Date(log.date),
       allDay: true
@@ -58,7 +58,7 @@ function UserTrack() {
 
   return (
     <div style={{ height: '100%', padding: '1rem' }}>
-      <h2>📆 Habit Tracker Calendar</h2>
+      <h2>Habit Tracker Calendar</h2>
       <Calendar
         localizer={localizer}
         events={events}
@@ -78,14 +78,14 @@ function UserTrack() {
       {modalOpen && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <h3>🗓 Habits on {selectedDate.toDateString()}</h3>
+            <h3>Habits on {selectedDate.toDateString()}</h3>
             {filteredHabits.length === 0 ? (
               <p>No habits logged for this day.</p>
             ) : (
               <ul>
                 {filteredHabits.map((log, index) => (
                   <li key={index}>
-                    {log.habit} - {log.done ? "✅ Done" : "❌ Missed"}
+                    {log.habit} - {log.done ? "Done" : "Missed"}
                   </li>
                 ))}
               </ul>
