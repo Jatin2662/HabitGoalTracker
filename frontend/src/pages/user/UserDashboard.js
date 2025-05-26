@@ -14,7 +14,7 @@ function UserDashboard() {
     const userName = localStorage.getItem('loggedInUser') || 'Logger';
     const dispatch = useDispatch();
     const theme = useSelector((state) => state.theme.theme)
-    console.log("Dashboard -> ", theme);
+    // console.log("Dashboard -> ", theme);
     const [count, setCount] = useState(0)
     // const navigate = useNavigate();
 
