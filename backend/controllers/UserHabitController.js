@@ -13,7 +13,9 @@ function generateHabitLogs(habit) {
   const logs = [];
 
   const start = new Date(startDate);
-  const end = endDate ? new Date(endDate) : new Date(start.getTime() + 30 * 86400000);
+
+  const getDaysInMonth = new Date(start.getFullYear(), start.getMonth() + 1, 0).getDate(); // new change
+  const end = endDate ? new Date(endDate) : new Date(start.getTime() + getDaysInMonth * 86400000); // replaced 30 with new change
 
   for (let current = new Date(start); current <= end; current.setDate(current.getDate() + 1)) {
     const day = current.getDay();
