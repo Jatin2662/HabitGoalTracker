@@ -5,48 +5,55 @@ const UserModel = require("../models/UserModel");
 
 
 
-function generateHabitLogs(habit) {
-  const { repeat, custom_repeat, startDate, endDate } = habit;
+function generateHabitLogs(habitLog) {
+    const { repeat, custom_repeat, startDate, endDate } = habitLog;
 
-  const dayMap = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
-  const repeatDays = (custom_repeat || []).map(day => dayMap[day]);
-  const logs = [];
+    const dayMap = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+    const repeatDays = (custom_repeat || []).map(day => dayMap[day]);
+    const logs = [];
 
-  const start = new Date(startDate);
+    const start = new Date(startDate);
 
-  const getDaysInMonth = new Date(start.getFullYear(), start.getMonth() + 1, 0).getDate(); // new change
-  const end = endDate ? new Date(endDate) : new Date(start.getTime() + getDaysInMonth * 86400000); // replaced 30 with new change
+    //   const defaultEnd = new Date(start);
+    // defaultEnd.setMonth(defaultEnd.getMonth() + 1); // 1 month range
+    // const end = endDate ? new Date(endDate) : defaultEnd;
 
-  for (let current = new Date(start); current <= end; current.setDate(current.getDate() + 1)) {
-    const day = current.getDay();
-    let include = false;
+    const getDaysInMonth = new Date(start.getFullYear(), start.getMonth() + 1, 0).getDate(); // new change
+    const end = endDate ? new Date(endDate) : new Date(start.getTime() + getDaysInMonth * 86400000); // replaced 30 with new change
 
-    switch (repeat) {
-      case 'daily':
-        include = true; break;
-      case 'weekly':
-        include = day === start.getDay(); break;
-      case 'monthly':
-        include = current.getDate() === start.getDate(); break;
-      case 'weekdays':
-        include = day >= 1 && day <= 5; break;
-      case 'weekends':
-        include = day === 0 || day === 6; break;
-      case 'custom':
-        include = repeatDays.includes(day); break;
+    for (let current = new Date(start); current <= end;) {
+        const day = current.getDay();
+        let include = false;
+
+        switch (repeat) {
+            case 'daily':
+                include = true; break;
+            case 'weekly':
+                include = day === start.getDay(); break;
+            case 'monthly':
+                include = current.getDate() === start.getDate(); break;
+            case 'weekdays':
+                include = day >= 1 && day <= 5; break;
+            case 'weekends':
+                include = day === 0 || day === 6; break;
+            case 'custom':
+                include = repeatDays.includes(day); break;
+        }
+
+        if (include) {
+            logs.push({
+                userId: habitLog.userId,
+                habitId: habitLog._id,
+                habit: habitLog.habit,
+                habitDescription: habitLog.habitDescription,
+                date: new Date(current),
+                status: 'pending'
+            });
+        }
+        current.setDate(current.getDate() + 1);
     }
 
-    if (include) {
-      logs.push({
-        userId: habit.userId,
-        habitId: habit._id,
-        date: new Date(current),
-        status: 'pending'
-      });
-    }
-  }
-
-  return logs;
+    return logs;
 }
 
 
@@ -176,23 +183,23 @@ const updateUserSettings = async (req, res, next) => {
     }
 }
 
-const getHabitCount = async (req, res, next)=>{
+const getHabitCount = async (req, res, next) => {
 
     const userId = req.user._id;
     console.log(userId)
 
-    try{
+    try {
 
         const habitCount = await HabitModel.countDocuments({ userId });
 
         console.log(habitCount)
 
-        if(!habitCount){
+        if (!habitCount) {
             return res.status(400).json({ message: "Could not find User.", success: false })
         }
 
         res.status(200).json({ message: "Data fetched securely.", success: true, count: habitCount })
-    }catch(err){
+    } catch (err) {
         res.status(500).json({ message: "Internal server error.", success: false })
     }
 }
