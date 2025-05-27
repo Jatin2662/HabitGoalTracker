@@ -11,7 +11,7 @@ function UserTrack() {
     { habit: "Workout", date: "2025-05-23", done: true },
     { habit: "Meditate", date: "2025-05-23", done: false },
     { habit: "Read", date: "2025-05-24", done: true },
-    { habit: "Workout", date: "2025-05-24", done: true },
+    { habit: "Work", date: "2025-05-24", done: true },
     { habit: "Workout", date: "2025-05-25", done: false },
   ]);
 
