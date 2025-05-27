@@ -183,22 +183,83 @@ const updateUserSettings = async (req, res, next) => {
     }
 }
 
-const getHabitCount = async (req, res, next) => {
+const getDashboardData = async (req, res, next) => {
 
     const userId = req.user._id;
-    console.log(userId)
+    // console.log(userId)
 
     try {
 
-        const habitCount = await HabitModel.countDocuments({ userId });
 
-        console.log(habitCount)
+        // Each Habit Status
+        const habits = await HabitModel.find({ userId });
 
-        if (!habitCount) {
+        const habitStats = await Promise.all(habits.map(async (habit) => {
+            const logs = await HabitLogModel.find({ habitId: habit._id });
+
+            const totalLogs = logs.length;
+            const completedLogs = logs.filter(log => log.status === 'completed').length;
+            const completionRate = totalLogs > 0 ? (completedLogs / totalLogs * 100).toFixed(2) : '0.00';
+
+            return {
+                habitId: habit._id,
+                habit: habit.habit,
+                habitDescription: habit.habitDescription,
+                totalLogs,
+                completedLogs,
+                completionRate: parseFloat(completionRate)
+            };
+        }));
+
+        // console.log(habitStats)
+
+
+        // Total Habits
+        const uniqueHabitCount = await HabitModel.countDocuments({ userId });
+
+        // Overall Completion Rate
+        const HabitLogs = await HabitLogModel.find({ userId });
+
+        const isCompleted = (log) => {
+            if (log.status == 'completed') {
+                return true
+            }
+            return false
+        }
+
+        const comp = HabitLogs.filter(isCompleted).length;
+        const total = HabitLogs.length;
+
+        const overallCompletionRate = total > 0 ? ((comp / total) * 100).toFixed(2) : '0.00';
+
+        // Today's Progress
+        // console.log(HabitLogs)
+
+        const todayHabits = HabitLogs.filter((habit)=>{
+            const todayDate = new Date().toISOString().split('T')[0];
+            console.log(todayDate);
+            
+            if(habit.updatedAt.toISOString().split('T')[0] == todayDate && habit.status == 'completed'){
+                return true;
+            }
+        })
+
+        const todayProgress = todayHabits.length;
+
+
+        if (!uniqueHabitCount) {
             return res.status(400).json({ message: "Could not find User.", success: false })
         }
 
-        res.status(200).json({ message: "Data fetched securely.", success: true, count: habitCount })
+        res.status(200).json({
+            message: "Data fetched securely.",
+            success: true,
+            count: uniqueHabitCount,
+            overallCompletionRate: overallCompletionRate,
+            habitStats: habitStats,
+            todayProgress: todayProgress
+        })
+
     } catch (err) {
         res.status(500).json({ message: "Internal server error.", success: false })
     }
@@ -211,7 +272,7 @@ module.exports = {
     deleteHabit,
     getUserSettings,
     updateUserSettings,
-    getHabitCount
+    getDashboardData
 }
 
 

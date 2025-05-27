@@ -15,7 +15,9 @@ function UserDashboard() {
     const dispatch = useDispatch();
     const theme = useSelector((state) => state.theme.theme)
     // console.log("Dashboard -> ", theme);
-    const [count, setCount] = useState(0)
+    const [count, setCount] = useState(0);
+    const [rate, setRate] = useState(0);
+    const [today, setToday] = useState(0);
     // const navigate = useNavigate();
 
     const cardTitle = [
@@ -32,12 +34,12 @@ function UserDashboard() {
         {
             id: 3,
             title: 'Overall completion Rate',
-            data: 'Static'
+            data: `${rate}%`
         },
         {
             id: 4,
             title: "Today's Progress",
-            data: 'Static'
+            data: `${today} Completed`
         },
         {
             id: 5,
@@ -63,9 +65,11 @@ function UserDashboard() {
             }
             const response = await axios.get(url, headers);
 
-            const { message, success, count } = response.data;
+            const { message, success, count, overallCompletionRate, habitStats, todayProgress } = response.data;
 
             setCount(count);
+            setRate(overallCompletionRate);
+            setToday(todayProgress);
             dispatch(showToast({ message: message, type: success ? "success" : "error" }))
 
         } catch (err) {
