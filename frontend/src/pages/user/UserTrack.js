@@ -1,8 +1,10 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import '../../styles/UserTrack.css';
+import { useDispatch } from 'react-redux';
+import { hideNav } from '../../redux/slice/navSlice';
 
 const localizer = momentLocalizer(moment);
 
@@ -14,6 +16,8 @@ function UserTrack() {
     { habit: "Work", date: "2025-05-24", done: true },
     { habit: "Workout", date: "2025-05-25", done: false },
   ]);
+
+  const dispatch = useDispatch();
 
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
@@ -55,6 +59,10 @@ function UserTrack() {
       log => new Date(log.date).toDateString() === selectedDate.toDateString()
     );
   }, [selectedDate, habitLogs]);
+
+  useEffect(()=>{
+    dispatch(hideNav('Track'))
+  },[])
 
   return (
     <div style={{ height: '100%', padding: '1rem' }}>

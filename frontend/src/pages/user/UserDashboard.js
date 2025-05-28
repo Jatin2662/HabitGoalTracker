@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { showToast } from "../../redux/slice/toastSlice";
 import { useState } from "react";
+import { hideNav } from "../../redux/slice/navSlice";
 
 function UserDashboard() {
 
@@ -18,6 +19,7 @@ function UserDashboard() {
     const [count, setCount] = useState(0);
     const [rate, setRate] = useState(0);
     const [today, setToday] = useState(0);
+    const [habitStats, setHabitStats] = useState([])
     // const navigate = useNavigate();
 
     const cardTitle = [
@@ -70,12 +72,18 @@ function UserDashboard() {
             setCount(count);
             setRate(overallCompletionRate);
             setToday(todayProgress);
+
+            setHabitStats(habitStats);
             dispatch(showToast({ message: message, type: success ? "success" : "error" }))
 
         } catch (err) {
             dispatch(showToast({ message: err.response?.data?.message, type: "error" }))
         }
     }
+
+    useEffect(()=>{
+        dispatch(hideNav('Dashboard'))
+    },[])
 
     useEffect(() => {
         getData();
@@ -94,6 +102,23 @@ function UserDashboard() {
                             <p>{ct.data}</p>
                         </div>
                     ))}
+                </section>
+
+                <section className="dashboard-overview">
+                    <h1>Habit's Overview</h1>
+                    <div className="ds-cards">
+                        {habitStats.length === 0 ?
+                        <h1>Nothing</h1> :
+                        habitStats.map((hs) => (
+                            <div className="ds-card" key={hs.habitId}>
+                                <h1>{hs.habit}</h1>
+                                <p>{hs.habitDescription}</p>
+                                <p><span>Total entries: </span>{hs.totalLogs}</p>
+                                <p><span>Completed: </span>{hs.completedLogs}</p>
+                                <p><span>Completion Rate: </span>{hs.completionRate} %</p>
+                            </div>
+                        ))}
+                    </div>
                 </section>
             </main>
         </>

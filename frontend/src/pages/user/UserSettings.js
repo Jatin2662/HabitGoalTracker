@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { showToast } from "../../redux/slice/toastSlice";
 import { setTheme } from "../../redux/slice/themeSlice";
 import '../../styles/UserSettings.css';
-
+import { hideNav } from "../../redux/slice/navSlice";
 
 
 function UserSettings() {
@@ -127,11 +127,12 @@ function UserSettings() {
 
     useEffect(() => {
         getUserData();
+        dispatch(hideNav('Settings'))
     }, [])
 
     return (
         <>
-            <h1>User Settings</h1>
+            {/* <h1>User Settings</h1> */}
             {/* <ul>
                 <li>Theme</li>
                 <li>Reset Password</li>

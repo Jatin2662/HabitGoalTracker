@@ -12,6 +12,7 @@ import { MdOutlineEdit } from "react-icons/md";
 import { MdDeleteOutline } from "react-icons/md";
 import UpdateHabitForm from "../../components/UpdateHabitForm";
 import DeleteHabit from "../../components/DeleteHabit";
+import { hideNav } from "../../redux/slice/navSlice";
 
 
 function HabitCardItem({ title, content }) {
@@ -71,6 +72,7 @@ function UserHabits() {
 
     useEffect(() => {
         getHabits();
+        dispatch(hideNav('Habits'))
     }, [])
 
     return (
