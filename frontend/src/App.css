@@ -40,8 +40,9 @@
 }
 
 body {
-  background-color: var(--bg);
-  /* color: var(--text-color); */
+  /* background-color: var(--bg); */
+  /* background-color: black; */
   transition: background-color 0.3s ease, color 0.3s ease;
   min-height: 100vh;
+  overflow-y: auto;
 }

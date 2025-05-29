@@ -6,17 +6,14 @@ const navSlice = createSlice({
     name: 'nav',
     initialState:{
         visible: false,
-        type: '',
         value: 'Dashboard'
     },
     reducers: {
         showNav:(state)=>{
             state.visible = true;
-            state.type = 'show';
         },
         hideNav: (state, action)=>{
             state.visible = false;
-            state.type = '';
             state.value = action.payload;
         }
     }
