@@ -22,6 +22,7 @@ import ScrollToTop from './components/ScrollToTop';
 import AdminHome from './pages/admin/AdminHome';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminUsers from './pages/admin/AdminUsers';
+import AdminCustomEmail from './pages/admin/AdminCustomEmail';
 
 function App() {
 
@@ -66,6 +67,7 @@ function App() {
           <Route index element={<Navigate to="admin-dashboard" />} />
           <Route path="admin-dashboard" element={<AdminDashboard />} />
           <Route path="admin-users" element={<AdminUsers />} />
+          < Route path="admin-setCustomEmail" element={<AdminCustomEmail/>} />
           </Route>
         </Route>
 
