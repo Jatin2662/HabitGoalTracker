@@ -1,45 +1,14 @@
 
 
 import React from "react";
-import { MdSpaceDashboard } from "react-icons/md";
-import { GiMeditation } from "react-icons/gi";
-import { MdOutlineGpsFixed } from "react-icons/md";
-import { IoSettings } from "react-icons/io5";
-import { MdLogout } from "react-icons/md";
-import { IoClose } from "react-icons/io5";
-import { FaAnchor } from "react-icons/fa";
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { hideNav } from "../redux/slice/navSlice";
+import { MdLogout } from "react-icons/md";
+import { IoClose } from "react-icons/io5";
+import { FaAnchor } from "react-icons/fa";
 
-function Navbar() {
-
-    const menuItems = [
-        {
-            id: 1,
-            title: 'Dashboard',
-            path: '/user/user-dashboard',
-            icon: <MdSpaceDashboard />
-        },
-        {
-            id: 2,
-            title: 'Habits',
-            path: '/user/user-habits',
-            icon: <GiMeditation />
-        },
-        {
-            id: 3,
-            title: 'Track',
-            path: '/user/user-track',
-            icon: <MdOutlineGpsFixed />
-        },
-        {
-            id: 4,
-            title: 'Settings',
-            path: '/user/user-settings',
-            icon: <IoSettings />
-        }
-    ]
+function Navbar({menuItems}) {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
