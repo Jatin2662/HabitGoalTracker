@@ -19,6 +19,9 @@ import UserTrack from './pages/user/UserTrack';
 import UserSettings from './pages/user/UserSettings';
 import Toast from "./components/Toast";
 import ScrollToTop from './components/ScrollToTop';
+import AdminHome from './pages/admin/AdminHome';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminUsers from './pages/admin/AdminUsers';
 
 function App() {
 
@@ -59,7 +62,11 @@ function App() {
         </Route>
 
         <Route path="/admin" element={<ProtectedRoutes allowedRoles={['admin']} />} >
-          <Route element={<h1>Admin Main Page</h1>} />
+          <Route element={<AdminHome />}>
+          <Route index element={<Navigate to="admin-dashboard" />} />
+          <Route path="admin-dashboard" element={<AdminDashboard />} />
+          <Route path="admin-users" element={<AdminUsers />} />
+          </Route>
         </Route>
 
         <Route path="/unauthorized" element={<Unauthorized />} />
