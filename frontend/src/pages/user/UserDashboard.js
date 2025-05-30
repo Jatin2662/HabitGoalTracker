@@ -97,7 +97,7 @@ function UserDashboard() {
 
     return (
         <>
-            <nav className="dashboard-nav centered">{userName + `'s`} Dashboard</nav>
+            <nav className="dashboard-nav centered">{userName + `'s`} Habit Tracker</nav>
             <main className="dashboard-content">
                 <section className="dashboard-cards">
                     {cardTitle.map((ct) => (
