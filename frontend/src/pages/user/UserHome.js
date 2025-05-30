@@ -2,37 +2,22 @@
 
 import React, { useState } from "react";
 import '../../styles/UserHome.css';
-import { FaHamburger } from "react-icons/fa";
-// import { SiPivotaltracker } from "react-icons/si";
-import { FaAnchor } from "react-icons/fa";
+import { useSelector, useDispatch } from "react-redux";
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
-import { useSelector, useDispatch } from "react-redux";
-import { showNav } from "../../redux/slice/navSlice";
+import { userMenuItems } from "../../Data";
+import Header from "../../components/Header";
 
 
 function UserHome() {
 
-    const { visible, type, value } = useSelector((state)=> state.nav)
-    const dispatch = useDispatch();
+    const { visible, type, value } = useSelector((state) => state.nav)
 
     return (
         <main className="user-home">
-            <nav className="user-home-nav">
-                <div>
-                    <button className="nav-btn centered" onClick={()=> dispatch(showNav())}>
-                        <FaHamburger />
-                    </button>
-                    <div className="nav-logo centered" >
-                        {/* <SiPivotaltracker /> */}
-                        <FaAnchor />
-                        </div>
+            <Header />
 
-                    <div>{value}</div>
-                </div>
-            </nav>
-
-            {visible && <Navbar/>}
+            {visible && <Navbar menuItems={userMenuItems} />}
 
             <section className="user-pages">
                 <Outlet />
