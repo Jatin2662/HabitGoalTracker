@@ -10,6 +10,7 @@ import { showToast } from "../../redux/slice/toastSlice";
 import { useState } from "react";
 import { BsFire } from "react-icons/bs";
 import { hideNav } from "../../redux/slice/navSlice";
+import DashboardCard from "../../components/DashboardCard";
 
 function UserDashboard() {
 
@@ -100,10 +101,7 @@ function UserDashboard() {
             <main className="dashboard-content">
                 <section className="dashboard-cards">
                     {cardTitle.map((ct) => (
-                        <div className="dashboard-card" key={ct.id} >
-                            <h1>{ct.title}</h1>
-                            <p>{ct.data}</p>
-                        </div>
+                        <DashboardCard id={ct.id} title={ct.title} data={ct.data} />
                     ))}
                 </section>
 
