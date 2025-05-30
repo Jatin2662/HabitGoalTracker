@@ -14,7 +14,7 @@ function AdminUsers(){
     })
 
     return(
-        <h1>Admin Users</h1>
+        <h1>Admin Users, add all users, filter active and inactive and add notify button to inactive users</h1>
     );
 }
 

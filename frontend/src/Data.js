@@ -5,6 +5,7 @@ import { MdOutlineGpsFixed } from "react-icons/md";
 import { IoSettings } from "react-icons/io5";
 import { FaUserSecret } from "react-icons/fa";
 import { FaUsers } from "react-icons/fa6";
+import { MdEmail } from "react-icons/md";
 
 
 const userMenuItems = [
@@ -47,6 +48,12 @@ const adminMenuItems = [
         title: 'Users',
         path: '/admin/admin-users',
         icon: <FaUsers />
+    },
+    {
+        id: 3,
+        title: 'Custom Email',
+        path: '/admin/admin-setCustomEmail',
+        icon: <MdEmail />
     },
 ]
 
