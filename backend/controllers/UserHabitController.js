@@ -183,6 +183,8 @@ const updateUserSettings = async (req, res, next) => {
     }
 }
 
+
+
 const getDashboardData = async (req, res, next) => {
 
     const userId = req.user._id;
@@ -235,17 +237,67 @@ const getDashboardData = async (req, res, next) => {
         // Today's Progress
         // console.log(HabitLogs)
 
-        const todayHabits = HabitLogs.filter((habit)=>{
+        const todayHabits = HabitLogs.filter((habit) => {
             const todayDate = new Date().toISOString().split('T')[0];
-            console.log(todayDate);
-            
-            if(habit.updatedAt.toISOString().split('T')[0] == todayDate && habit.status == 'completed'){
+            // console.log(todayDate);
+
+            if (habit.updatedAt.toISOString().split('T')[0] == todayDate && habit.status == 'completed') {
                 return true;
             }
         })
 
         const todayProgress = todayHabits.length;
 
+        // Streak Work
+
+        const NormalizeInUTC = (date) => {
+            const d = new Date(date);
+            d.setUTCHours(0, 0, 0, 0)
+
+            return d;
+        }
+        const logs = await HabitLogModel.find({ userId });
+
+        // console.log(logs)
+
+        const recievedDates = logs
+            .filter(log => log.status == 'completed')
+            .map((log) => {
+                return log.updatedAt;
+            })
+            .sort((a, b) => new Date(b) - new Date(a));
+        // console.log("Recieved dates: ",recievedDates)
+
+        const uniqueDates = new Set(
+            recievedDates.map(date => {
+                const d = new Date(date);
+
+                return d;
+            })
+        )
+
+        const dayStreak = [];
+        for (const element of uniqueDates) {
+            dayStreak.push(element)
+        }
+
+        // console.log("Day streak: ", dayStreak)
+        const todayDate = NormalizeInUTC(new Date());
+        let streak = 0;
+
+        for(let i = 0; i < dayStreak.length;){
+            const d = NormalizeInUTC(dayStreak[i]);
+
+            if(todayDate.getTime() === d.getTime()){
+                streak++;
+
+                todayDate.setDate(todayDate.getDate() - 1);
+            }else{
+                break;
+            }
+        }
+
+        // console.log(streak)
 
         if (!uniqueHabitCount) {
             return res.status(400).json({ message: "Could not find User.", success: false })
@@ -257,7 +309,8 @@ const getDashboardData = async (req, res, next) => {
             count: uniqueHabitCount,
             overallCompletionRate: overallCompletionRate,
             habitStats: habitStats,
-            todayProgress: todayProgress
+            todayProgress: todayProgress,
+            streak: streak
         })
 
     } catch (err) {

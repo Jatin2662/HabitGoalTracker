@@ -11,6 +11,10 @@
     padding: 12px;
 }
 
+.streak svg{
+    color: orange;
+}
+
 .dashboard-cards,
 .ds-cards {
     display: grid;

@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { showToast } from "../../redux/slice/toastSlice";
 import { useState } from "react";
+import { BsFire } from "react-icons/bs";
 import { hideNav } from "../../redux/slice/navSlice";
 
 function UserDashboard() {
@@ -16,6 +17,7 @@ function UserDashboard() {
     const dispatch = useDispatch();
     const theme = useSelector((state) => state.theme.theme)
     // console.log("Dashboard -> ", theme);
+    const [streak, setStreak] = useState(0);
     const [count, setCount] = useState(0);
     const [rate, setRate] = useState(0);
     const [today, setToday] = useState(0);
@@ -26,7 +28,7 @@ function UserDashboard() {
         {
             id: 1,
             title: 'Streak',
-            data: 'Static'
+            data: <div className="streak centered">{streak}<span><BsFire className="centered"/></span></div>
         },
         {
             id: 2,
@@ -67,11 +69,12 @@ function UserDashboard() {
             }
             const response = await axios.get(url, headers);
 
-            const { message, success, count, overallCompletionRate, habitStats, todayProgress } = response.data;
+            const { message, success, count, overallCompletionRate, habitStats, todayProgress, streak } = response.data;
 
             setCount(count);
             setRate(overallCompletionRate);
             setToday(todayProgress);
+            setStreak(streak);
 
             setHabitStats(habitStats);
             dispatch(showToast({ message: message, type: success ? "success" : "error" }))
