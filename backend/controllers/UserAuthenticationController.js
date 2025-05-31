@@ -44,7 +44,7 @@ const login = async (req, res, next) => {
     try {
         const { email, password } = req.body;
 
-        const user = await UserModel.findOne({ email });
+        const user = await UserModel.findOneAndUpdate({ email }, {$set: {lastActive: new Date()}}); // added new lastACTIVE for Admin analysis
         const errorMessage = 'Authentication failed!!! email or password is incorrect.';
 
         if (!user) {
