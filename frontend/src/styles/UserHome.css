@@ -110,8 +110,11 @@
     height: 25px;
 }
 
-.user-menu-bar h1 {
-    text-align: center;
+.user-menu-bar h3 {
+    font-size: 0.9em;
+    /* text-align: left; */
+    padding-left: 10px;
+    color: #aaa;
 }
 
 .user-menu {

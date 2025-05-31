@@ -7,57 +7,91 @@ import { FaUserSecret } from "react-icons/fa";
 import { FaUsers } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
 
+import { jwtDecode } from "jwt-decode";
+
+const getMenuItems = () => {
+    const token = localStorage.getItem('token');
+    if (!token) return [];
+
+    try {
+        const decoded = jwtDecode(token);
+        const userRole = decoded.role;
+
+        if (userRole === 'admin') {
+            return [...userMenuItems, ...adminMenuItems];
+        } else if (userRole === 'user') {
+            return userMenuItems;
+        } else {
+            return [];
+        }
+    } catch (err) {
+        return [];
+    }
+};
 
 const userMenuItems = [
     {
-        id: 1,
-        title: 'Dashboard',
-        path: '/user/user-dashboard',
-        icon: <MdSpaceDashboard />
-    },
-    {
-        id: 2,
-        title: 'Habits',
-        path: '/user/user-habits',
-        icon: <GiMeditation />
-    },
-    {
-        id: 3,
-        title: 'Track',
-        path: '/user/user-track',
-        icon: <MdOutlineGpsFixed />
-    },
-    {
-        id: 4,
-        title: 'Settings',
-        path: '/user/user-settings',
-        icon: <IoSettings />
+        title: 'USER',
+        items: [
+            {
+                id: 1,
+                title: 'Dashboard',
+                path: '/user/user-dashboard',
+                icon: <MdSpaceDashboard />
+            },
+            {
+                id: 2,
+                title: 'Habits',
+                path: '/user/user-habits',
+                icon: <GiMeditation />
+            },
+            {
+                id: 3,
+                title: 'Track',
+                path: '/user/user-track',
+                icon: <MdOutlineGpsFixed />
+            },
+            {
+                id: 4,
+                title: 'Settings',
+                path: '/user/user-settings',
+                icon: <IoSettings />
+            }
+        ]
     }
-]
 
+]
 
 const adminMenuItems = [
     {
-        id: 1,
-        title: 'Dashboard',
-        path: '/admin/admin-dashboard',
-        icon: <FaUserSecret />
-    },
-    {
-        id: 2,
-        title: 'Users',
-        path: '/admin/admin-users',
-        icon: <FaUsers />
-    },
-    {
-        id: 3,
-        title: 'Custom Email',
-        path: '/admin/admin-setCustomEmail',
-        icon: <MdEmail />
-    },
+        title: 'ADMIN',
+        items: [
+            {
+                id: 5,
+                title: 'Admin Dashboard',
+                path: '/admin/admin-dashboard',
+                icon: <FaUserSecret />
+            },
+            {
+                id: 6,
+                title: 'Users',
+                path: '/admin/admin-users',
+                icon: <FaUsers />
+            },
+            {
+                id: 7,
+                title: 'Custom Email',
+                path: '/admin/admin-setCustomEmail',
+                icon: <MdEmail />
+            },
+        ]
+    }
+
 ]
 
+// const menuItems = userRole === 'admin' ? [...userMenuItems, ...adminMenuItems] : userRole === 'user' ? userMenuItems : [];
+const menuItems = getMenuItems();
+
 export {
-    userMenuItems,
-    adminMenuItems
+    menuItems
 }

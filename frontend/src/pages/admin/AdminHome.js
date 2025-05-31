@@ -3,7 +3,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { adminMenuItems } from "../../Data";
+import { menuItems } from "../../Data";
 import Navbar from "../../components/Navbar";
 import Header from "../../components/Header";
 
@@ -15,7 +15,7 @@ function AdminHome() {
         <main className="user-home">
             <Header title="Admin" />
 
-            {visible && <Navbar menuItems={adminMenuItems} />}
+            {visible && <Navbar menuItems={menuItems} />}
 
             <section className="user-pages">
                 <Outlet />

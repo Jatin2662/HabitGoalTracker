@@ -5,7 +5,7 @@ import '../../styles/UserHome.css';
 import { useSelector, useDispatch } from "react-redux";
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
-import { userMenuItems } from "../../Data";
+import { menuItems } from "../../Data";
 import Header from "../../components/Header";
 
 
@@ -17,7 +17,7 @@ function UserHome() {
         <main className="user-home">
             <Header />
 
-            {visible && <Navbar menuItems={userMenuItems} />}
+            {visible && <Navbar menuItems={menuItems} />}
 
             <section className="user-pages">
                 <Outlet />

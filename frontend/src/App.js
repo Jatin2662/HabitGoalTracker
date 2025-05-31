@@ -50,7 +50,7 @@ function App() {
           <Route path="signup" element={<SignUp />} />
         </Route>
 
-        <Route path='/user' element={<ProtectedRoutes allowedRoles={['user']} />} >
+        <Route path='/user' element={<ProtectedRoutes allowedRoles={['user', 'admin']} />} >
           <Route element={<UserHome />}>
             {/* <Route index element={<UserDashboard />} /> */}
             <Route index element={<Navigate to="user-dashboard" />} />
@@ -64,10 +64,10 @@ function App() {
 
         <Route path="/admin" element={<ProtectedRoutes allowedRoles={['admin']} />} >
           <Route element={<AdminHome />}>
-          <Route index element={<Navigate to="admin-dashboard" />} />
-          <Route path="admin-dashboard" element={<AdminDashboard />} />
-          <Route path="admin-users" element={<AdminUsers />} />
-          < Route path="admin-setCustomEmail" element={<AdminCustomEmail/>} />
+            <Route index element={<Navigate to="admin-dashboard" />} />
+            <Route path="admin-dashboard" element={<AdminDashboard />} />
+            <Route path="admin-users" element={<AdminUsers />} />
+            < Route path="admin-setCustomEmail" element={<AdminCustomEmail />} />
           </Route>
         </Route>
 

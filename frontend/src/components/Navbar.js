@@ -8,32 +8,37 @@ import { MdLogout } from "react-icons/md";
 import { IoClose } from "react-icons/io5";
 import { FaAnchor } from "react-icons/fa";
 
-function Navbar({menuItems}) {
+function Navbar({ menuItems }) {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { visibile, type, value } = useSelector((state)=> state.nav)
+    const { visibile, type, value } = useSelector((state) => state.nav)
 
     return (
-        <section className = {`user-menu-bar ${type}`} >
+        <section className={`user-menu-bar ${type}`} >
             <header>
                 <div>
                     <FaAnchor />
                 </div>
-                <div onClick={()=> dispatch(hideNav(value))}>
+                <div onClick={() => dispatch(hideNav(value))}>
                     <IoClose />
                 </div>
             </header>
             <div className="user-menu">
                 {menuItems.map((mt) => (
                     //    <div key={mt.id} className="user-menu-items"><span>{mt.logo}</span> <Link to={mt.path}>{mt.title}</Link></div>
-                    <NavLink
-                        to={mt.path}
-                        key={mt.id}
-                        className={({ isActive }) => `user-menu-items ${(isActive ? 'active' : '')}`}>
-                        <span className="centered" >{mt.icon}</span>
-                        <span>{mt.title}</span>
-                    </NavLink>
+                    <div>
+                        <h3>{mt.title}</h3>
+                        {mt.items.map((mti) => (
+                            <NavLink
+                                to={mti.path}
+                                key={mti.id}
+                                className={({ isActive }) => `user-menu-items ${(isActive ? 'active' : '')}`}>
+                                <span className="centered" >{mti.icon}</span>
+                                <span>{mti.title}</span>
+                            </NavLink>
+                        ))}
+                    </div>
                 ))}
                 <div className="user-menu-items" onClick={() => {
                     localStorage.clear();
