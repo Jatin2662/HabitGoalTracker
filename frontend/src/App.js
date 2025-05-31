@@ -12,17 +12,19 @@ import LogIn from './components/Login';
 import SignUp from './components/Signup';
 import Unauthorized from './components/Unauthorized';
 import ProtectedRoutes from './components/Authorization';
-import UserHome from './pages/user/UserHome';
+// import UserHome from './pages/user/UserHome';
 import UserDashboard from './pages/user/UserDashboard';
 import UserHabits from './pages/user/UserHabits';
 import UserTrack from './pages/user/UserTrack';
 import UserSettings from './pages/user/UserSettings';
 import Toast from "./components/Toast";
 import ScrollToTop from './components/ScrollToTop';
-import AdminHome from './pages/admin/AdminHome';
+// import AdminHome from './pages/admin/AdminHome';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminUsers from './pages/admin/AdminUsers';
 import AdminCustomEmail from './pages/admin/AdminCustomEmail';
+// import Home from './pages/Home';
+import MainHome from './pages/MainHome';
 
 function App() {
 
@@ -51,7 +53,7 @@ function App() {
         </Route>
 
         <Route path='/user' element={<ProtectedRoutes allowedRoles={['user', 'admin']} />} >
-          <Route element={<UserHome />}>
+          <Route element={<MainHome />}>
             {/* <Route index element={<UserDashboard />} /> */}
             <Route index element={<Navigate to="user-dashboard" />} />
             <Route path="user-dashboard" element={<UserDashboard />} />
@@ -63,7 +65,7 @@ function App() {
         </Route>
 
         <Route path="/admin" element={<ProtectedRoutes allowedRoles={['admin']} />} >
-          <Route element={<AdminHome />}>
+          <Route element={<MainHome />}>
             <Route index element={<Navigate to="admin-dashboard" />} />
             <Route path="admin-dashboard" element={<AdminDashboard />} />
             <Route path="admin-users" element={<AdminUsers />} />

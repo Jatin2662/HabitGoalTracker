@@ -2,11 +2,10 @@
 
 const express = require('express');
 const { ensureAuthorized, ensureAuthenticated } = require('../middlewares/UserAuthentication');
+const { adminDashboardData } = require('../controllers/AdminController');
 const router = express.Router();
 
 
-router.get('/dashboard', ensureAuthenticated, ensureAuthorized(['admin']), (req, res)=>{
-    res.json({ message: "Admin Dashboard" })
-})
+router.get('/admin-dashboard', ensureAuthenticated, ensureAuthorized(['admin']), adminDashboardData )
 
 module.exports = router;

@@ -24,6 +24,9 @@ const userSchema = new Schema({
         type: Date,
         default: Date.now
     },
+    lastActive:{
+        type: Date
+    },
     theme: {
         type: String,
         enum: ['light', 'dark'],
