@@ -44,7 +44,7 @@ const login = async (req, res, next) => {
     try {
         const { email, password } = req.body;
 
-        const user = await UserModel.findOneAndUpdate({ email }, {$set: {lastActive: new Date()}}); // added new lastACTIVE for Admin analysis
+        const user = await UserModel.findOneAndUpdate({ email });
         const errorMessage = 'Authentication failed!!! email or password is incorrect.';
 
         if (!user) {
@@ -55,6 +55,9 @@ const login = async (req, res, next) => {
         if (!isPassEqual) {
             return res.status(403).json({ message: errorMessage, success: false })
         }
+
+        user.lastActive = new Date();    // added new lastActive for Admin analysis
+        await user.save();
 
         const jwtToken = jwt.sign(
             { email: user.email, _id: user._id, role: user.role },
