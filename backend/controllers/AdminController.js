@@ -2,7 +2,8 @@
 
 const UserModel = require("../models/UserModel");
 const nodemailer = require('nodemailer')
-const Mailgen = require('mailgen')
+const Mailgen = require('mailgen');
+const MailModel = require("../models/AdminMail");
 
 
 const adminDashboardData = async (req, res, next) => {
@@ -105,14 +106,14 @@ const sendMail = (email) => {
 
     let MailGenerator = new Mailgen({
         theme: "default",
-        product:{
+        product: {
             name: "Mailgen",
             link: 'https://mailgen.js/'
         }
     });
 
     let info = {
-        body:{
+        body: {
             name: "Box",
             intro: "Hello",
             outro: "Bye"
@@ -158,8 +159,41 @@ const notifySingleUser = async (req, res, next) => {
     }
 }
 
+const setMailContent = async (req, res, next) => {
+
+    const { subject, body, end, mailId } = req.body;
+    try {
+
+        if (!mailId) {
+            const mail = new MailModel({
+                subject,
+                body,
+                end
+            })
+
+            await mail.save();
+
+            return res.status(200).json({ message: "Mail body set.", success: true })
+        }
+
+        const mail = await MailModel.findByIdAndUpdate(
+            mailId,
+            { subject, body, end },
+            { new: true }
+        )
+
+        res.status(200).json({ message: "Mail content updated successfully.", success: true, mail })
+
+    } catch (err) {
+        return res.status(500).json({ message: "Internal server error", success: false })
+    }
+}
+
+
+
 module.exports = {
     adminDashboardData,
     getAllUsers,
-    notifySingleUser
+    notifySingleUser,
+    setMailContent
 }
