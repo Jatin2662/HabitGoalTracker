@@ -1,0 +1,111 @@
+.admin-users-container {
+    /* min-height: 100vh; */
+    overflow-y: scroll;
+    scrollbar-width: none;
+
+    padding: 2em;
+    background-color: var(--bg);
+    color: var(--text-primary);
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.inactive-user-btn,
+.notify-btn {
+    background-color: var(--btn-bg-color);
+    color: var(--font-color);
+    border: none;
+    border-radius: 7px;
+    font-size: 1.1em;
+    font-weight: 500;
+    padding: 5px 7px;
+    cursor: pointer;
+}
+
+.user-table {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.user-table-header,
+.user-table-row {
+    background-color: var(--surface);
+    display: grid;
+    grid-template-columns: 2fr 2.5fr 1.5fr 1.5fr 1fr;
+    padding: 1rem;
+    border-bottom: 1px solid var(--border);
+    align-items: center;
+}
+
+.user-table-header {
+    font-weight: bold;
+}
+
+.notify-btn {
+    background-color: #28a745;
+    color: var(--font-color);
+}
+
+.notify-btn:hover {
+    background-color: #218838;
+}
+
+@media screen and (max-width: 936px) {
+    .user-table-header {
+        display: none;
+    }
+
+    .user-table {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+
+    .user-table-row {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    .user-table-row span:nth-child(1)::before {
+        content: "Name: ";
+    }
+
+    .user-table-row span:nth-child(2)::before {
+        content: "Email: ";
+    }
+
+    .user-table-row span:nth-child(3)::before {
+        content: "Joined on: ";
+    }
+
+    .user-table-row span:nth-child(4)::before {
+        content: "Last active: ";
+    }
+
+    .user-table-row {
+        color: var(--primary);
+    }
+
+    .user-table-row span::before {
+        color: var(--text-primary);
+        font-weight: 600;
+    }
+
+    .notify-btn {
+        width: 50%;
+        margin: 0.5rem auto;
+    }
+}
+
+@media screen and (max-width:613px) {
+    .notify-btn {
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+}
