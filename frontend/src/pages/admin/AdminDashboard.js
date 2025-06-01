@@ -11,6 +11,9 @@ import { useState } from "react";
 function AdminDashboard() {
     const dispatch = useDispatch();
     const [totalUsers, setTotalUsers] = useState(0)
+    const [activeUsers, setActiveUsers] = useState(0)
+    const [inActiveUsers, setInActiveUsers] = useState(0)
+    const [newUsers, setNewUsers] = useState(0)
 
     const cardData = [
         {
@@ -21,17 +24,17 @@ function AdminDashboard() {
         {
             id: 2,
             title: 'Active users',
-            data: 'Static'
+            data: activeUsers
         },
         {
             id: 3,
             title: 'Inactive users',
-            data: 'Static'
+            data: inActiveUsers
         },
         {
             id: 4,
             title: 'New users (past 7 days)',
-            data: 'Static'
+            data: newUsers
         },
     ]
 
@@ -46,9 +49,12 @@ function AdminDashboard() {
             }
             const response = await axios.get(url, headers)
 
-            const { message, success, totalUsers } = response.data;
+            const { message, success, totalUsers, activeUsers, inActiveUsers, newUsers } = response.data;
 
             setTotalUsers(totalUsers);
+            setActiveUsers(activeUsers);
+            setInActiveUsers(inActiveUsers);
+            setNewUsers(newUsers)
             dispatch(showToast({ message: message, type: success ? "success" : "error" }))
         } catch (error) {
             dispatch(showToast({ message: error.response?.data?.message, type: "error" }))
