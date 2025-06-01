@@ -165,17 +165,18 @@ const setMailContent = async (req, res, next) => {
     try {
 
         if (!mailId) {
+
+            // it will become post request
             const mail = new MailModel({
                 subject,
                 body,
                 end
             })
-
             await mail.save();
-
-            return res.status(200).json({ message: "Mail body set.", success: true })
+            return res.status(200).json({ message: "Mail body set.", success: true, mail })
         }
 
+        // and this will be put request, see frontend what I did, is written there.
         const mail = await MailModel.findByIdAndUpdate(
             mailId,
             { subject, body, end },
@@ -189,11 +190,26 @@ const setMailContent = async (req, res, next) => {
     }
 }
 
+const getMailContent = async (req, res, next) =>{
 
+    try{
+
+        const mailContent = await MailModel.find().lean();
+
+        if(mailContent.length === 0){
+            return res.status(404).json({ message: "You might haven't set the mail body.", success: false })
+        }
+
+        res.status(200).json({ message: "Mail content retrieved.", success: true, mailContent })
+    }catch(err){
+        return res.status(500).json({ message: "Internal sever error", success: false })
+    }
+}
 
 module.exports = {
     adminDashboardData,
     getAllUsers,
     notifySingleUser,
-    setMailContent
+    setMailContent,
+    getMailContent
 }

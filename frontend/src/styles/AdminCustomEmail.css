@@ -45,8 +45,23 @@
     border: 2px solid #0077ff;
 }
 
+.mail-btn {
+    /* width: 50%; */
+    align-self: center;
+}
+
 @media screen and (max-width: 895px) {
     .admin-mail form {
+        width: 100%;
+    }
+
+    .mail-btn {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 530px){
+    .mail-btn {
         width: 100%;
     }
 }
