@@ -50,6 +50,12 @@
     align-self: center;
 }
 
+.mail-btn:disabled{
+    background-color: rgb(170, 170, 170);
+    color: black;
+    cursor: no-drop;
+}
+
 @media screen and (max-width: 895px) {
     .admin-mail form {
         width: 100%;

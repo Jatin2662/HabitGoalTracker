@@ -19,16 +19,22 @@ function AdminCustomEmail() {
 
     const dispatch = useDispatch();
 
+    let mailDataCopy = {};
+    const [disable, setDisable] = useState(true);
+    const [save, setSave] = useState(true);
     const [mailId, setMailId] = useState('')
     const [mailData, setMailData] = useState({
         subject: '',
         body: '',
         end: ''
     })
+    // const save = mailData === mailDataCopy;
 
     const handleChange = (e) => {
 
         setMailData({ ...mailData, [e.target.name]: e.target.value })
+        if(mailData !== mailDataCopy) setSave(false)
+            console.log(save);
     }
 
     const handleFormChange = async (e) => {
@@ -69,6 +75,8 @@ function AdminCustomEmail() {
 
             dispatch(showToast({ message: message, type: success ? "success" : "error" }));
             setMailData(mail)
+            setDisable(true);
+            setSave(true);
         } catch (error) {
             dispatch(showToast({ message: error.response?.data?.message || "catch", type: "error" }))
         }
@@ -98,7 +106,9 @@ function AdminCustomEmail() {
             }
             dispatch(showToast({ message: message, type: success ? "success" : "error" }));
 
-            console.log(mailContent)
+            // console.log(mailContent)
+            mailDataCopy = mailContent
+            console.log(mailDataCopy)
 
         } catch (error) {
             dispatch(showToast({ message: error.response?.data?.message, type: "error" }))
@@ -114,6 +124,7 @@ function AdminCustomEmail() {
         <main className="admin-mail">
             <div className="admin-header">
                 <h1>Set Email content</h1>
+                <button className="inactive-user-btn mail-btn" onClick={() => setDisable(!disable)} >Edit</button>
             </div>
             <form onSubmit={handleFormChange} >
                 <div className="input-fields">
@@ -125,6 +136,7 @@ function AdminCustomEmail() {
                         id="subject"
                         value={mailData.subject}
                         onChange={handleChange}
+                        disabled={disable}
                         required
                     />
                 </div>
@@ -137,6 +149,7 @@ function AdminCustomEmail() {
                         id="body"
                         value={mailData.body}
                         onChange={handleChange}
+                        disabled={disable}
                         required
                         rows={5}
                     />
@@ -150,11 +163,12 @@ function AdminCustomEmail() {
                         id="end"
                         value={mailData.end}
                         onChange={handleChange}
+                        disabled={disable}
                         required
                     />
                 </div>
 
-                <button type="submit" className="inactive-user-btn mail-btn" >Save</button>
+                <button type="submit" className="inactive-user-btn mail-btn" disabled={save} >Save</button>
             </form>
         </main>
     );
