@@ -94,7 +94,7 @@ const getAllUsers = async (req, res, next) => {
     }
 }
 
-const sendMail = (email) => {
+const sendMail = (subject, body, end, email) => {
 
     const transporter = nodemailer.createTransport({
         service: "gmail",
@@ -104,29 +104,61 @@ const sendMail = (email) => {
         }
     })
 
-    let MailGenerator = new Mailgen({
-        theme: "default",
-        product: {
-            name: "Mailgen",
-            link: 'https://mailgen.js/'
-        }
-    });
+    // console.log(subject, body, end, email)
 
-    let info = {
-        body: {
-            name: "Box",
-            intro: "Hello",
-            outro: "Bye"
-        }
-    }
+    // let MailGenerator = new Mailgen({
+    //     theme: "default",
+    //     product: {
+    //         name: "Mailgen",
+    //         link: 'https://mailgen.js/'
+    //     }
+    // });
 
-    let mail = MailGenerator.generate(info);
+    // let info = {
+    //     body: {
+    //         name: "Box",
+    //         intro: "Hello",
+    //         outro: "Bye"
+    //     }
+    // }
+
+    // let mail = MailGenerator.generate(info);
+
+    let info2 = `
+     <!DOCTYPE html>
+    <html>
+      <body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f0f8ff;">
+        <table align="center" cellpadding="0" cellspacing="0" width="600" style="background-color: #ffffff; border-collapse: collapse;">
+          <tr>
+            <td style="background-color: #005f73; color: #ffffff; text-align: center; padding: 20px; font-size: 24px;">
+              Habit Tracker
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 20px;">
+              <h2 style="margin-top: 0;">Hey, ${email}!</h2>
+              <p>Habit tracker is waiting for you, <strong>Go</strong></p>
+              <p>${body}</p>
+              <h4>${end}</h4>
+            </td>
+          </tr>
+          <tr>
+            <td style="background-color: #d3e0ea; padding: 15px; font-size: 12px; text-align: center; color: #555;">
+              &copy; 2025 The Habit Tracker. All Rights Reserved.
+            </td>
+          </tr>
+        </table>
+      </body>
+    </html>
+    `
+
 
     let message = {
         from: process.env.EMAIL,
         to: email,
-        subject: "Activate",
-        html: mail
+        replyTo: process.env.EMAIL,
+        subject: subject || "Activate",
+        html: info2
     }
 
     transporter.sendMail(message)
@@ -149,9 +181,21 @@ const notifySingleUser = async (req, res, next) => {
             return res.status(404).json({ message: "User not found", success: false });
         }
 
-        console.log(userEmail.email);
+        const emailContent = await MailModel.find();
 
-        sendMail(userEmail.email)
+        if (!emailContent) {
+            return res.status(404).json({ message: "No email content found.", success: false })
+        }
+
+        // console.log(emailContent)
+
+        const { subject, body, end } = emailContent[0];
+
+        // console.log(subject, body, end)
+
+        // console.log(userEmail.email);
+
+        sendMail(subject, body, end, userEmail.email)
 
         res.status(201).json({ message: "Mail sent successfully.", success: true })
     } catch (err) {
@@ -190,18 +234,18 @@ const setMailContent = async (req, res, next) => {
     }
 }
 
-const getMailContent = async (req, res, next) =>{
+const getMailContent = async (req, res, next) => {
 
-    try{
+    try {
 
         const mailContent = await MailModel.find().lean();
 
-        if(mailContent.length === 0){
+        if (mailContent.length === 0) {
             return res.status(404).json({ message: "You might haven't set the mail body.", success: false })
         }
 
         res.status(200).json({ message: "Mail content retrieved.", success: true, mailContent })
-    }catch(err){
+    } catch (err) {
         return res.status(500).json({ message: "Internal sever error", success: false })
     }
 }
