@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import '../../styles/UserHabits.css';
 import HabitForm from "../../components/HabitForm";
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { showToast } from "../../redux/slice/toastSlice";
 import { MdOutlineEdit } from "react-icons/md";
@@ -37,12 +37,15 @@ function UserHabits() {
     const [habitToUpdate, setHabitToUpdate] = useState();
     const [deleteDialoge, setDeleteDialoge] = useState(false);
     const [habitToDelete, setHabitToDelete] = useState();
+
+    const [filter, setFilter] = useSearchParams();
+    const state = filter.get('filter') || 'all'; // default all bcz if we navigate from another page to here then all will be selected
     const navigate = useNavigate();
 
     const getHabits = async () => {
 
         try {
-            const url = 'http://localhost:8080/user/user-habits'
+            const url = `http://localhost:8080/user/user-habits?status=${state}`
 
             const response = await axios.get(url, {
                 headers: {
@@ -70,10 +73,18 @@ function UserHabits() {
     //     dispatch(showToast({ message: message, type: "success" }));
     // };
 
+    const handleChange = (e) => {
+        setFilter({ filter : e.target.value })
+    }
+
     useEffect(() => {
-        getHabits();
+        // getHabits();
         dispatch(hideNav('Habits'))
     }, [])
+
+    useEffect(() => {
+        getHabits();
+    }, [state])
 
     return (
         <>
@@ -81,6 +92,51 @@ function UserHabits() {
                 <Toast message="Ahoy! Habit added successfully!" onClose={() => setShowToast(false)} />
             )} */}
             <nav className="dashboard-nav centered">{userName + `'s`} Habits</nav>
+            <nav className="filter-nav centered ">
+                <div className="filter-fields centered" >
+                    <input
+                        type="radio"
+                        id="all"
+                        value="all"
+                        name="filter"
+                        checked={state === 'all'}
+                        onChange={handleChange}
+                    />
+                    <label htmlFor="all" >All</label>
+                </div>
+                <div className="filter-fields centered" >
+                    <input
+                        type="radio"
+                        id="active"
+                        value="active"
+                        name="filter"
+                        checked={state === 'active'}
+                        onChange={handleChange}
+                    />
+                    <label htmlFor="active" >Active</label>
+                </div>
+                <div className="filter-fields centered" >
+                    <input
+                        type="radio"
+                        id="suspended"
+                        value="suspended"
+                        name="filter"
+                        checked={state === 'suspended'}
+                        onChange={handleChange}
+                    />
+                    <label htmlFor="suspended" >Suspended</label>
+                </div>
+                <div className="filter-fields centered" >
+                    <input
+                        type="radio"
+                        id="archived"
+                        value="archived"
+                        name="filter"
+                        onChange={handleChange}
+                    />
+                    <label htmlFor="archived" >Archived</label>
+                </div>
+            </nav>
             <main className="habits-content">
                 <div className="habits-content-head">
                     <h1>Manage Habits</h1>
@@ -90,7 +146,7 @@ function UserHabits() {
                 <section className="habits-data">
 
                     {habitsData.length === 0 ? (
-                        <h1>{serverMessage}</h1>
+                        <h1 className="centered" >{serverMessage}</h1>
                     ) : (
                         <div className="habits-cards">
                             {habitsData.map((hd) => (
@@ -101,7 +157,7 @@ function UserHabits() {
                                     <HabitCardItem title="Repeat: " content={hd.repeat} />
                                     <HabitCardItem title="Custom Repeat: " content={hd.custom_repeat.join(', ') || 'None'} />
                                     <HabitCardItem title="Start Date: " content={new Date(hd.startDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })} />
-                                    <HabitCardItem title="End Date: " content={hd.endDate ? new Date(hd.endDate).toLocaleDateString() : 'Ongoing'} />
+                                    <HabitCardItem title="End Date: " content={hd.endDate ? new Date(hd.endDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : 'Ongoing'} />
                                     <HabitCardItem title="Status: " content={hd.state} />
                                     <div className="habit-actions">
                                         <MdOutlineEdit className="edit-icon" onClick={() => {

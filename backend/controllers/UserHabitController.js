@@ -80,6 +80,7 @@ const addHabit = async (req, res, next) => {
 const getHabits = async (req, res, next) => {
 
     const userId = req.user._id;
+    const { status } = req.query;
 
     try {
 
@@ -91,7 +92,14 @@ const getHabits = async (req, res, next) => {
             // status -> 204 gives no content then manage in frontend or pass 200 
         }
 
-        res.status(200).json({ message: "All Habits fetched!!!", habits: allHabits, success: true })
+        const filteredHabits = status === 'all' ? allHabits : allHabits.filter(habits => habits.state === status)
+
+        if(!filteredHabits || filteredHabits.length === 0){
+            return res.status(200).json({ message: `No "${status}" habits.`, habits: filteredHabits, success: true })
+            // return res.status(200).json({ message: `No "${status}" habits.`, success: false })   // both will work
+        }
+
+        res.status(200).json({ message: "All Habits fetched!!!", habits: filteredHabits, success: true })
     } catch (err) {
         res.status(500).json({ message: "Internal server error", error: err, success: false })
     }

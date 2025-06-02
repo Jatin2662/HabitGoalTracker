@@ -2,6 +2,26 @@
   padding: 7px;
 }
 
+.habits-data h1{
+  
+}
+
+.filter-nav {
+  display: flex;
+  width: 90%;
+  margin: 10px auto;
+  justify-content: space-evenly;
+  color: var(--text-primary);
+  flex-wrap: wrap;
+  gap: 10px;
+  /* background-color: #0056b3; */
+}
+
+.filter-fields label {
+  font-size: 0.9em;
+  font-weight: 600;
+}
+
 .habits-content-head {
   display: flex;
   justify-content: space-evenly;
@@ -86,5 +106,14 @@
 
   .habit-card div {
     font-size: 13px;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .filter-nav {
+    /* display: grid;
+    grid-template-columns: repeat(auto-fit, minmax()); */
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
