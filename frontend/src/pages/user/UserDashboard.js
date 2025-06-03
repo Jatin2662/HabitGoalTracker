@@ -10,6 +10,7 @@ import { showToast } from "../../redux/slice/toastSlice";
 import { useState } from "react";
 import { BsFire } from "react-icons/bs";
 import { hideNav } from "../../redux/slice/navSlice";
+import { showLoader, hideLoader } from "../../redux/slice/loaderSlice";
 import DashboardCard from "../../components/DashboardCard";
 
 function UserDashboard() {
@@ -29,7 +30,7 @@ function UserDashboard() {
         {
             id: 1,
             title: 'Streak',
-            data: <div className="streak centered">{streak}<span><BsFire className="centered"/></span></div>
+            data: <div className="streak centered">{streak}<span><BsFire className="centered" /></span></div>
         },
         {
             id: 2,
@@ -60,6 +61,7 @@ function UserDashboard() {
     // }
 
     const getData = async () => {
+        dispatch(showLoader('Fetching data.'))
 
         try {
             const url = 'http://localhost:8080/user/user-dashboard'
@@ -83,14 +85,15 @@ function UserDashboard() {
         } catch (err) {
             dispatch(showToast({ message: err.response?.data?.message, type: "error" }))
         }
+        dispatch(hideLoader())
     }
-
-    useEffect(()=>{
-        dispatch(hideNav('Dashboard'))
-    },[])
 
     useEffect(() => {
         getData();
+        dispatch(hideNav('Dashboard'))
+    }, [])
+
+    useEffect(() => {
         // const theme = localStorage.getItem('theme') || 'light';
         document.documentElement.setAttribute('data-theme', theme)
     }, [theme])
@@ -109,16 +112,16 @@ function UserDashboard() {
                     <h1>Habit's Overview</h1>
                     <div className="ds-cards">
                         {habitStats.length === 0 ?
-                        <h1>Nothing</h1> :
-                        habitStats.map((hs) => (
-                            <div className="ds-card" key={hs.habitId}>
-                                <h1>{hs.habit}</h1>
-                                <p>{hs.habitDescription}</p>
-                                <p><span>Total entries: </span>{hs.totalLogs}</p>
-                                <p><span>Completed: </span>{hs.completedLogs}</p>
-                                <p><span>Completion Rate: </span>{hs.completionRate} %</p>
-                            </div>
-                        ))}
+                            <h1>Nothing</h1> :
+                            habitStats.map((hs) => (
+                                <div className="ds-card" key={hs.habitId}>
+                                    <h1>{hs.habit}</h1>
+                                    <p>{hs.habitDescription}</p>
+                                    <p><span>Total entries: </span>{hs.totalLogs}</p>
+                                    <p><span>Completed: </span>{hs.completedLogs}</p>
+                                    <p><span>Completion Rate: </span>{hs.completionRate} %</p>
+                                </div>
+                            ))}
                     </div>
                 </section>
             </main>

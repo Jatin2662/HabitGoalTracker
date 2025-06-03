@@ -8,6 +8,7 @@ import { showToast } from "../../redux/slice/toastSlice";
 import { setTheme } from "../../redux/slice/themeSlice";
 import '../../styles/UserSettings.css';
 import { hideNav } from "../../redux/slice/navSlice";
+import { showLoader, hideLoader } from "../../redux/slice/loaderSlice";
 
 
 function UserSettings() {
@@ -43,6 +44,7 @@ function UserSettings() {
     };
 
     const getUserData = async () => {
+        dispatch(showLoader('Fetching data.'))
 
         try {
             const url = 'http://localhost:8080/user/user-settings'
@@ -78,6 +80,7 @@ function UserSettings() {
         } catch (err) {
             dispatch(showToast({ message: err.response?.data?.message || "An unexpected error occurred", type: "error" }))
         }
+        dispatch(hideLoader())
     }
 
     const getModifiedFields = (originalData, userDetails) => {
@@ -96,6 +99,7 @@ function UserSettings() {
     }
 
     const updateData = async () => {
+        dispatch(showLoader('Updating data.'))
 
         try {
             const finalData = getModifiedFields(originalData.current, userDetails);
@@ -117,6 +121,7 @@ function UserSettings() {
         } catch (err) {
             dispatch(showToast({ message: err.response?.data?.message || "An unexpected error occurred", type: "error" }))
         }
+        dispatch(hideLoader())
     }
 
     useEffect(() => {

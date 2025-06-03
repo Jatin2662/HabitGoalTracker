@@ -7,6 +7,7 @@ import { hideNav } from "../../redux/slice/navSlice";
 import { showToast } from "../../redux/slice/toastSlice";
 import axios from "axios";
 import '../../styles/AdminUsers.css'
+import { showLoader, hideLoader } from "../../redux/slice/loaderSlice";
 
 
 function AdminUsers() {
@@ -15,6 +16,7 @@ function AdminUsers() {
     const [users, setUsers] = useState([]);
 
     const getUsers = async () => {
+        dispatch(showLoader('Fetching all users.'))
 
         try {
             const url = 'http://localhost:8080/admin/admin-users'
@@ -32,9 +34,11 @@ function AdminUsers() {
         } catch (err) {
             dispatch(showToast({ message: err.response?.data?.message, type: "error" }))
         }
+        dispatch(hideLoader())
     }
 
     const notify = async (id) => {
+        dispatch(showLoader('Sending email.'))
         try {
             const url = 'http://localhost:8080/admin/admin-users'
             const headers = {
@@ -42,7 +46,7 @@ function AdminUsers() {
                     'Authorization': localStorage.getItem('token')
                 }
             }
-            const response = await axios.post(url, {id}, headers );
+            const response = await axios.post(url, { id }, headers);
 
             const { message, success } = response.data;
 
@@ -50,6 +54,7 @@ function AdminUsers() {
         } catch (err) {
             dispatch(showToast({ message: err.response?.data?.message, type: "error" }))
         }
+        dispatch(hideLoader())
     }
 
     useEffect(() => {

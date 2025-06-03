@@ -25,10 +25,12 @@ import AdminUsers from './pages/admin/AdminUsers';
 import AdminCustomEmail from './pages/admin/AdminCustomEmail';
 // import Home from './pages/Home';
 import MainHome from './pages/MainHome';
+import Loader from './components/Loader';
 
 function App() {
 
   const { visible, message, type } = useSelector((state) => state.toast);
+  const { hidden, text } = useSelector((state) => state.loader);
   const dispatch = useDispatch();
 
   return (
@@ -39,6 +41,9 @@ function App() {
           type={type}
           onClose={() => dispatch(hideToast())}
         />
+      )}
+      {hidden && (
+        <Loader text={text} />
       )}
       <ScrollToTop />
       <Routes>

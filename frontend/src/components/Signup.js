@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { useDispatch } from "react-redux";
 import { showToast } from "../redux/slice/toastSlice";
+import { hideLoader, showLoader } from "../redux/slice/loaderSlice";
 
 
 function SignUp() {
@@ -27,25 +28,26 @@ function SignUp() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        dispatch(showLoader('Please wait while we process'))
+        
         try {
             const url = 'http://localhost:8080/auth/signup';
             const response = await axios.post(url, formData);
-
+            
             const { message, success } = response.data;
-
+            
             dispatch(showToast({ message: message, type: success ? "success" : "error" }));
-
-            console.log(formData)
-
+            
             setFormData({
                 firstName: "",
                 lastName: "",
                 email: "",
                 password: ""
             })
+            
+            dispatch(hideLoader())
+            navigate('/auth/login')
         } catch (err) {
-            console.log(err);
             dispatch(showToast({ message: err.message + ', ' + err.response?.data?.message + ', ' + err.status, type: "error" }));
         }
     }

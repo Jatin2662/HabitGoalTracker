@@ -10,6 +10,13 @@
     justify-content: center;
 }
 
+.loader{
+    background-color: aliceblue;
+    border-radius: 10px;
+    text-align: center;
+    padding: 20px;
+}
+
 .deleteHabit {
     padding: 2em;
     /* transform: translate(-50%, -50%); */

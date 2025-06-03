@@ -13,6 +13,7 @@ import { MdDeleteOutline } from "react-icons/md";
 import UpdateHabitForm from "../../components/UpdateHabitForm";
 import DeleteHabit from "../../components/DeleteHabit";
 import { hideNav } from "../../redux/slice/navSlice";
+import { showLoader, hideLoader } from "../../redux/slice/loaderSlice";
 
 
 function HabitCardItem({ title, content }) {
@@ -43,7 +44,7 @@ function UserHabits() {
     const navigate = useNavigate();
 
     const getHabits = async () => {
-
+        dispatch(showLoader('Fetching data.'))
         try {
             const url = `http://localhost:8080/user/user-habits?status=${state}`
 
@@ -66,6 +67,7 @@ function UserHabits() {
         } catch (err) {
             dispatch(showToast({ message: err.response?.data?.message || "An unexpected error occurred", type: "error" }))
         }
+        dispatch(hideLoader())
     }
 
     // const handleHabitAdded = (message) => {
@@ -74,7 +76,7 @@ function UserHabits() {
     // };
 
     const handleChange = (e) => {
-        setFilter({ filter : e.target.value })
+        setFilter({ filter: e.target.value })
     }
 
     useEffect(() => {

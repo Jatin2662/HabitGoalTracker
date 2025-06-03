@@ -6,6 +6,8 @@ import axios from 'axios';
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setTheme } from "../redux/slice/themeSlice";
+import { hideLoader, showLoader } from "../redux/slice/loaderSlice";
+
 
 
 function LogIn() {
@@ -28,6 +30,7 @@ function LogIn() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        dispatch(showLoader("Sit tight going to Dashboard."))
         const { email, password } = formData;
 
         try {
@@ -62,6 +65,7 @@ function LogIn() {
             setMessage(errorMsg);
         }
 
+        dispatch(hideLoader())
         setFormData({
             email: "",
             password: ""

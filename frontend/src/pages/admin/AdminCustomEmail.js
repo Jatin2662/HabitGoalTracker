@@ -6,6 +6,7 @@ import { hideNav } from "../../redux/slice/navSlice";
 import { showToast } from '../../redux/slice/toastSlice';
 import axios from 'axios';
 import '../../styles/AdminCustomEmail.css';
+import { showLoader, hideLoader } from "../../redux/slice/loaderSlice";
 
 function AdminCustomEmail() {
 
@@ -33,12 +34,13 @@ function AdminCustomEmail() {
     const handleChange = (e) => {
 
         setMailData({ ...mailData, [e.target.name]: e.target.value })
-        if(mailData !== mailDataCopy) setSave(false)
-            console.log(save);
+        if (mailData !== mailDataCopy) setSave(false)
+        console.log(save);
     }
 
     const handleFormChange = async (e) => {
         e.preventDefault();
+        dispatch(showLoader('Saving Mail data.'))
 
         try {
 
@@ -80,9 +82,11 @@ function AdminCustomEmail() {
         } catch (error) {
             dispatch(showToast({ message: error.response?.data?.message || "catch", type: "error" }))
         }
+        dispatch(hideLoader())
     }
 
     const getMailContent = async () => {
+        dispatch(showLoader('Fetching Mail content.'))
         try {
             const url = 'http://localhost:8080/admin/admin-setCustomEmail'
             const headers = {
@@ -108,11 +112,12 @@ function AdminCustomEmail() {
 
             // console.log(mailContent)
             mailDataCopy = mailContent
-            console.log(mailDataCopy)
+            // console.log(mailDataCopy)
 
         } catch (error) {
             dispatch(showToast({ message: error.response?.data?.message, type: "error" }))
         }
+        dispatch(hideLoader())
     }
 
     useEffect(() => {

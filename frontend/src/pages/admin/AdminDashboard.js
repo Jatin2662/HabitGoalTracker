@@ -7,6 +7,7 @@ import { showToast } from '../../redux/slice/toastSlice';
 import { hideNav } from "../../redux/slice/navSlice";
 import DashboardCard from "../../components/DashboardCard";
 import { useState } from "react";
+import { showLoader, hideLoader } from "../../redux/slice/loaderSlice";
 
 function AdminDashboard() {
     const dispatch = useDispatch();
@@ -39,8 +40,9 @@ function AdminDashboard() {
     ]
 
     const getAdminDashboardData = async () => {
+        dispatch(showLoader('Fetching data.'))
         try {
-
+            
             const url = 'http://localhost:8080/admin/admin-dashboard';
             const headers = {
                 headers: {
@@ -48,7 +50,7 @@ function AdminDashboard() {
                 }
             }
             const response = await axios.get(url, headers)
-
+            
             const { message, success, totalUsers, activeUsers, inActiveUsers, newUsers } = response.data;
 
             setTotalUsers(totalUsers);
@@ -59,6 +61,7 @@ function AdminDashboard() {
         } catch (error) {
             dispatch(showToast({ message: error.response?.data?.message, type: "error" }))
         }
+        dispatch(hideLoader())
     }
 
     useEffect(() => {
