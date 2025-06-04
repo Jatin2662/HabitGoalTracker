@@ -46,7 +46,7 @@
 
 ## Work in progress
 
-- Track page (User)
+- Update Habit details (Date)
 - Notify all Inactive users (Admin)
 
 ## Future Scope
