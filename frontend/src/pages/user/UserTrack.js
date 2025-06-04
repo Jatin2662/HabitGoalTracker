@@ -143,7 +143,7 @@ function UserTrack() {
 
   return (
     <div style={{ height: '100%', padding: '1rem' }} className='user-track' >
-      <h2>Habit Tracker Calendar</h2>
+      <h2>Habit Tracker Calendar <div className='color-block'><span>Completed</span> <span>Pending</span></div></h2>
       <Calendar
         localizer={localizer}
         events={events}

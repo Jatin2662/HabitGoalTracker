@@ -3,6 +3,32 @@
   color: var(--text-primary);
 }
 
+.user-track h2{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.color-block{
+  font-size: 0.7em;
+  font-weight: 400;
+  text-justify: center;
+}
+
+.color-block span{
+  padding: 3px 7px;
+  border-radius: 7px;
+  color: var(--font-color);
+  cursor: pointer;
+}
+
+.color-block span:nth-child(1){
+  background-color: #065f96;
+}
+.color-block span:nth-child(2){
+  background-color: #991b3c;
+}
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -78,6 +104,7 @@
 
 .habit-li:hover {
   background-color: #f1f1f1;
+  color: #1E293B;
 }
 
 .habit-li label {
@@ -91,7 +118,7 @@
 
 .save-btn {
   padding: 0.4rem 0.7rem;
-  background: #333;
+  background: var(--btn-bg-color);
   color: white;
   border: none;
   cursor: pointer;
