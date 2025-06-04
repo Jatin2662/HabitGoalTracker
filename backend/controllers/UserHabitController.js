@@ -94,7 +94,7 @@ const getHabits = async (req, res, next) => {
 
         const filteredHabits = status === 'all' ? allHabits : allHabits.filter(habits => habits.state === status)
 
-        if(!filteredHabits || filteredHabits.length === 0){
+        if (!filteredHabits || filteredHabits.length === 0) {
             return res.status(200).json({ message: `No "${status}" habits.`, habits: filteredHabits, success: true })
             // return res.status(200).json({ message: `No "${status}" habits.`, success: false })   // both will work
         }
@@ -293,14 +293,14 @@ const getDashboardData = async (req, res, next) => {
         const todayDate = NormalizeInUTC(new Date());
         let streak = 0;
 
-        for(let i = 0; i < dayStreak.length;){
+        for (let i = 0; i < dayStreak.length;) {
             const d = NormalizeInUTC(dayStreak[i]);
 
-            if(todayDate.getTime() === d.getTime()){
+            if (todayDate.getTime() === d.getTime()) {
                 streak++;
 
                 todayDate.setDate(todayDate.getDate() - 1);
-            }else{
+            } else {
                 break;
             }
         }
@@ -326,6 +326,53 @@ const getDashboardData = async (req, res, next) => {
     }
 }
 
+const getHabitLogs = async (req, res, next) => {
+    const userId = req.user._id;
+    // console.log(userId)
+
+    try {
+        const habitLogs = await HabitLogModel.find({ userId }).lean();
+
+        if (!habitLogs || habitLogs.length === 0) {
+            return res.status(404).json({ message: "No logs found!", success: false })
+        }
+
+        // console.log(habitLogs)
+
+        res.status(200).json({ message: "All logs fetched.", success: true, habitLogs: habitLogs })
+
+    } catch (err) {
+        return res.status(500).json({ message: "Internal server error.", success: false })
+    }
+}
+
+const updateHabitLogCompletion = async (req, res, next) => {
+
+    const logsData = req.body;
+
+    console.log("Frontend", logsData)
+
+    try {
+        const logData = await Promise.all(logsData.map(async (log) => {
+            const logId = log._id;
+
+            const updateLog = await HabitLogModel.findByIdAndUpdate(
+                logId,
+                { $set: { status: log.status } },
+                { new: true }
+            )
+
+            return updateLog
+        }))
+
+        console.log("Backend", logData)
+
+        res.status(200).json({ message: "Log updated successfully.", success: true, logData: logData })
+    } catch (err) {
+        return res.status(500).json({ message: "Internal server error.", success: false })
+    }
+}
+
 module.exports = {
     addHabit,
     getHabits,
@@ -333,7 +380,9 @@ module.exports = {
     deleteHabit,
     getUserSettings,
     updateUserSettings,
-    getDashboardData
+    getDashboardData,
+    getHabitLogs,
+    updateHabitLogCompletion
 }
 
 
