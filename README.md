@@ -36,6 +36,7 @@
 - Switch theme
 - Admin and User Pages
 - Notify users
+- Lazy loading
 
 ## Notes
 
