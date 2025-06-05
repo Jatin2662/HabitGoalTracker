@@ -328,16 +328,35 @@ const getDashboardData = async (req, res, next) => {
 
 const getHabitLogs = async (req, res, next) => {
     const userId = req.user._id;
-    // console.log(userId)
+    const userDate = req.query.date;
 
     try {
+
+        if (userDate) {
+            const start = new Date(userDate)
+            start.setUTCHours(0, 0, 0, 0);
+            
+            const end = new Date(userDate)
+            end.setUTCHours(23, 59, 59, 999);
+            
+            const habitLogs = await HabitLogModel.find({
+                userId,
+                date: {
+                    $gte: start,
+                    $lte: end
+                }
+            }).lean();
+            if (!habitLogs || habitLogs.length === 0) {
+                return res.status(404).json({ message: "No logs found!", success: false })
+            }
+
+            return res.status(200).json({ message: "All logs fetched.", success: true, habitLogs: habitLogs })
+        }
         const habitLogs = await HabitLogModel.find({ userId }).lean();
 
         if (!habitLogs || habitLogs.length === 0) {
             return res.status(404).json({ message: "No logs found!", success: false })
         }
-
-        // console.log(habitLogs)
 
         res.status(200).json({ message: "All logs fetched.", success: true, habitLogs: habitLogs })
 
@@ -350,7 +369,7 @@ const updateHabitLogCompletion = async (req, res, next) => {
 
     const logsData = req.body;
 
-    console.log("Frontend", logsData)
+    // console.log("Frontend", logsData)
 
     try {
         const logData = await Promise.all(logsData.map(async (log) => {
@@ -365,7 +384,7 @@ const updateHabitLogCompletion = async (req, res, next) => {
             return updateLog
         }))
 
-        console.log("Backend", logData)
+        // console.log("Backend", logData)
 
         res.status(200).json({ message: "Log updated successfully.", success: true, logData: logData })
     } catch (err) {

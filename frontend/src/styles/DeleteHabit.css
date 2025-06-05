@@ -8,6 +8,7 @@
     background-color: rgba(106, 106, 106, 0.405);
     display: flex;
     justify-content: center;
+    z-index: 343;
 }
 
 .loader{

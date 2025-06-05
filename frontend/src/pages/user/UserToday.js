@@ -15,7 +15,6 @@ import happy from '../../assets/image/happy.webp'
 function UserToday() {
 
     const dispatch = useDispatch()
-
     const todayDate = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
 
     const [playBell, { stop: stopBell, sound: bellSound }] = useSound(drum2, { volume: 0.5 });
@@ -84,10 +83,11 @@ function UserToday() {
     }
 
     const getHabits = async () => {
-
+        dispatch(showLoader("Getting today's logs."))
         try {
-
-            const url = 'http://localhost:8080/user/user-today'
+            const date = new Date();
+            const formattedDate = date.toISOString().split("T")[0];
+            const url = `http://localhost:8080/user/user-today?date=${formattedDate}`
             const headers = {
                 headers: {
                     'Authorization': localStorage.getItem('token')
@@ -95,14 +95,43 @@ function UserToday() {
             }
             const response = await axios.get(url, headers);
 
-            const { message, success, data } = response.data;
+            const { message, success, habitLogs } = response.data;
 
-            setData(data);
+            console.log(habitLogs)
+            setData(habitLogs);
 
             dispatch(showToast({ message: message, type: success ? "success" : "error" }))
         } catch (error) {
-            dispatch(showToast({ message: error.repsonse?.data?.message, type: "error" }))
+            dispatch(showToast({ message: error.response?.data?.message, type: "error" }))
         }
+        dispatch(hideLoader())
+    }
+
+    const updateCompletionStatus = async() => {
+        dispatch(showLoader("Updating status!"))
+        try{
+
+            const updatedLogs = data.map((dt)=>{
+                return{
+                    _id: dt._id,
+                    status: dt.status
+                }
+            })
+            const url = 'http://localhost:8080/user/user-today';
+            const headers = {
+                headers: {
+                    'Authorization': localStorage.getItem('token')
+                }
+            }
+            const response = await axios.patch(url, updatedLogs, headers)
+
+            const { message, success, logData } = response.data;
+
+            dispatch(showToast({ message: message, type: success ? "success" : "error" }))
+        }catch(error){
+            dispatch(showToast({ message: error.response?.data?.message, type: "error" }))
+        }
+        dispatch(hideLoader())
     }
 
     useEffect(() => {
@@ -124,11 +153,11 @@ function UserToday() {
                     :
                     data.map((dt) => {
                         return (
-                            <section className={`singleLog ${dt.status}`} key={dt.id}>
+                            <section className={`singleLog ${dt.status}`} key={dt._id}>
                                 <div className="centered" >
-                                    {dt.title}
+                                    {dt.habit}
                                 </div>
-                                <p>{dt.description}</p>
+                                <p>{dt.habitDescription}</p>
                                 <div className="centered" >
                                     <span>
                                         <input
@@ -145,7 +174,7 @@ function UserToday() {
                 }
             </section>
             <div className="centered" >
-                <button className="save-btn extra" onClick={() => console.log(data)} disabled={data.length === 0}>Save</button>
+                <button className="save-btn extra" onClick={updateCompletionStatus} disabled={data.length === 0}>Save</button>
             </div>
         </main>
     );

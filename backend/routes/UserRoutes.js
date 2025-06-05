@@ -16,5 +16,7 @@ router.post('/user-settings', ensureAuthenticated, ensureAuthorized(['admin', 'u
 router.get('/user-dashboard', ensureAuthenticated, ensureAuthorized(['admin', 'user']), getDashboardData)
 router.get('/user-track', ensureAuthenticated, ensureAuthorized(['admin', 'user']), getHabitLogs)
 router.patch('/user-track', ensureAuthenticated, ensureAuthorized(['admin', 'user']), updateHabitLogCompletion)
+router.get('/user-today', ensureAuthenticated, ensureAuthorized(['admin', 'user']), getHabitLogs)
+router.patch('/user-today', ensureAuthenticated, ensureAuthorized(['admin', 'user']), updateHabitLogCompletion)
 
 module.exports = router;
