@@ -26,6 +26,7 @@ import AdminCustomEmail from './pages/admin/AdminCustomEmail';
 // import Home from './pages/Home';
 import MainHome from './pages/MainHome';
 import Loader from './components/Loader';
+import UserToday from './pages/user/UserToday';
 
 function App() {
 
@@ -63,6 +64,7 @@ function App() {
             <Route index element={<Navigate to="user-dashboard" />} />
             <Route path="user-dashboard" element={<UserDashboard />} />
             <Route path="user-habits/:habitId?" element={<UserHabits />} />
+            <Route path="user-today" element={<UserToday />} />
             <Route path="user-track" element={<UserTrack />} />
             <Route path="user-settings" element={<UserSettings />} />
 

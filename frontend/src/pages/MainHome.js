@@ -17,6 +17,7 @@ import { IoSettings } from "react-icons/io5";
 import { FaUserSecret } from "react-icons/fa";
 import { FaUsers } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
+import { IoToday } from "react-icons/io5";
 
 
 function MainHome() {
@@ -42,12 +43,18 @@ function MainHome() {
                 },
                 {
                     id: 3,
+                    title: "Today's Log",
+                    path: '/user/user-today',
+                    icon: <IoToday />
+                },
+                {
+                    id: 4,
                     title: 'Track',
                     path: '/user/user-track',
                     icon: <MdOutlineGpsFixed />
                 },
                 {
-                    id: 4,
+                    id: 5,
                     title: 'Settings',
                     path: '/user/user-settings',
                     icon: <IoSettings />
@@ -62,19 +69,19 @@ function MainHome() {
             title: 'ADMIN',
             items: [
                 {
-                    id: 5,
+                    id: 6,
                     title: 'Admin Dashboard',
                     path: '/admin/admin-dashboard',
                     icon: <FaUserSecret />
                 },
                 {
-                    id: 6,
+                    id: 7,
                     title: 'Users',
                     path: '/admin/admin-users',
                     icon: <FaUsers />
                 },
                 {
-                    id: 7,
+                    id: 8,
                     title: 'Custom Email',
                     path: '/admin/admin-setCustomEmail',
                     icon: <MdEmail />
