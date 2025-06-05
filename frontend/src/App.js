@@ -15,7 +15,6 @@ import ProtectedRoutes from './components/Authorization';
 // import UserHome from './pages/user/UserHome';
 import UserDashboard from './pages/user/UserDashboard';
 import UserHabits from './pages/user/UserHabits';
-import UserTrack from './pages/user/UserTrack';
 import UserSettings from './pages/user/UserSettings';
 import Toast from "./components/Toast";
 import ScrollToTop from './components/ScrollToTop';
@@ -27,6 +26,10 @@ import AdminCustomEmail from './pages/admin/AdminCustomEmail';
 import MainHome from './pages/MainHome';
 import Loader from './components/Loader';
 import UserToday from './pages/user/UserToday';
+import { lazy, Suspense } from 'react';
+
+const UserTrack = lazy(() => import('./pages/user/UserTrack'))
+
 
 function App() {
 
@@ -65,7 +68,12 @@ function App() {
             <Route path="user-dashboard" element={<UserDashboard />} />
             <Route path="user-habits/:habitId?" element={<UserHabits />} />
             <Route path="user-today" element={<UserToday />} />
-            <Route path="user-track" element={<UserTrack />} />
+            <Route path="user-track"
+              element={
+                <Suspense fallback={<Loader text="Loading Track..." />}>
+                  <UserTrack />
+                </Suspense>
+              } />
             <Route path="user-settings" element={<UserSettings />} />
 
           </Route>
