@@ -1,6 +1,6 @@
 
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { hideNav } from "../../redux/slice/navSlice";
 import { showLoader, hideLoader } from "../../redux/slice/loaderSlice";
 import { showToast } from "../../redux/slice/toastSlice";
@@ -15,7 +15,7 @@ import happy from '../../assets/image/happy.webp'
 function UserToday() {
 
     const dispatch = useDispatch()
-    const todayDate = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
+    const todayDate = useMemo(() => new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }))
 
     const [playBell, { stop: stopBell, sound: bellSound }] = useSound(drum2, { volume: 0.5 });
     const [isPlaying, setIsPlaying] = useState(false);
@@ -69,18 +69,18 @@ function UserToday() {
 
     const [data, setData] = useState([])
 
-    const handleChange = (e, id) => {
+    const handleChange = useCallback((e, id) => {
         const checked = e.target.checked ? 'completed' : 'pending';
 
         const updatedHabit = data.map((dt) => {
-            if (dt.id === id) {
+            if (dt._id === id) {
                 return { ...dt, status: checked }
             }
             return dt;
         })
 
         setData(updatedHabit)
-    }
+    }, [data])
 
     const getHabits = async () => {
         dispatch(showLoader("Getting today's logs."))
@@ -97,7 +97,6 @@ function UserToday() {
 
             const { message, success, habitLogs } = response.data;
 
-            console.log(habitLogs)
             setData(habitLogs);
 
             dispatch(showToast({ message: message, type: success ? "success" : "error" }))
@@ -107,12 +106,12 @@ function UserToday() {
         dispatch(hideLoader())
     }
 
-    const updateCompletionStatus = async() => {
+    const updateCompletionStatus = async () => {
         dispatch(showLoader("Updating status!"))
-        try{
+        try {
 
-            const updatedLogs = data.map((dt)=>{
-                return{
+            const updatedLogs = data.map((dt) => {
+                return {
                     _id: dt._id,
                     status: dt.status
                 }
@@ -128,22 +127,37 @@ function UserToday() {
             const { message, success, logData } = response.data;
 
             dispatch(showToast({ message: message, type: success ? "success" : "error" }))
-        }catch(error){
+        } catch (error) {
             dispatch(showToast({ message: error.response?.data?.message, type: "error" }))
         }
         dispatch(hideLoader())
     }
+
+    const [show, setShow] = useState(false)
 
     useEffect(() => {
         getHabits();
         dispatch(hideNav("Today's Log"))
     }, [])
 
+    useEffect(() => {
+    if (data.some(dt => dt.status === 'pending')) {
+        const interval = setInterval(() => {
+            setShow(prev => !prev);
+        }, 3000);
+
+        return () => clearInterval(interval);
+    }
+}, [data]);
+
 
     return (
         <main className="user-today">
             <div className="sound" onClick={handleMoodToggle}>
                 {isPlaying ? 'Pause Mood' : 'Set Mood'}
+            </div>
+            <div className={`surprise ${show ? "show" : "hide"}`}>
+                <img src={happy} />
             </div>
             <h1>{todayDate}</h1>
 
@@ -163,7 +177,7 @@ function UserToday() {
                                         <input
                                             type="checkbox"
                                             checked={dt.status === 'completed'}
-                                            onChange={(e) => handleChange(e, dt.id)}
+                                            onChange={(e) => handleChange(e, dt._id)}
                                         />
                                         <label>{dt.status === 'completed' ? 'Completed' : 'Pending'}</label>
                                     </span>

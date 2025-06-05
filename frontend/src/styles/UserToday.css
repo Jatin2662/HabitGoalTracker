@@ -1,11 +1,37 @@
 .user-today {
     display: flex;
     align-items: center;
-    justify-content: center;
+    /* justify-content: center; */
     flex-direction: column;
     background-color: var(--bg);
     color: var(--text-primary);
     position: relative;
+    /* height: 100vh;
+    overflow: auto;
+    box-sizing: border-box; */
+}
+
+/* .user-today::-webkit-scrollbar{
+    display: none;
+} */
+
+.surprise {
+    position: absolute;
+    top: 50vh;
+    left: -180px;
+    transform: rotate(45deg);
+    transition: all 0.8s ease-in-out;
+    z-index: 343;
+}
+
+.surprise.show {
+    left: 0;
+    transform: rotate(45deg);
+}
+
+.surprise img {
+    width: 130px;
+    object-fit: contain;
 }
 
 .sound {
