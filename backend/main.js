@@ -18,9 +18,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 
-app.get('/', (req, res, next)=>{
-    res.json({ message: "Hii" })
-})
+
 app.use('/auth', AuthRoutes);
 app.use('/user', UserRoutes);
 app.use('/admin', AdminRoutes);
