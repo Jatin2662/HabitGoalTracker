@@ -6,6 +6,7 @@
     background-color: var(--bg);
     color: var(--text-primary);
     position: relative;
+    min-height: 100vh;
     /* height: 100vh;
     overflow: auto;
     box-sizing: border-box; */
@@ -18,20 +19,46 @@
 .surprise {
     position: absolute;
     top: 50vh;
-    left: -180px;
-    transform: rotate(45deg);
+    left: -600px;
     transition: all 0.8s ease-in-out;
     z-index: 343;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
 }
 
 .surprise.show {
-    left: 0;
-    transform: rotate(45deg);
+    left: -50px;
 }
 
 .surprise img {
     width: 130px;
     object-fit: contain;
+    transform: rotate(30deg);
+}
+
+.surprise-box {
+    width: 80%;
+    border-radius: 0 15px 15px 15px;
+    word-wrap: break-word;
+    background-color: var(--surface);
+    padding: 1em;
+    animation: opac 0.8s ease-in-out;
+}
+
+@keyframes opac {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.surprise-box span {
+    color: var(--primary);
+    cursor: pointer;
 }
 
 .sound {
@@ -68,7 +95,7 @@
     padding: 2em;
 }
 
-.todaysLog h1{
+.todaysLog h1 {
     text-align: center;
 }
 
@@ -78,7 +105,7 @@
     background-color: var(--bg);
     border: 1px solid var(--border);
     border-radius: 15px;
-    height: 60vh;
+    /* min-height: 10vh; */
     /* width: 30vw; */
     padding: 5px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -119,13 +146,22 @@
 .singleLog p {
     flex-grow: 8;
     border-bottom: 1px solid var(--border);
+    padding: 1em;
+    margin: 0;
 }
 
 .extra {
     font-size: 1em;
 }
 
-.extra:disabled{
+.extra:disabled {
     background-color: rgb(87, 87, 87);
+    color: white;
     cursor: no-drop;
+}
+
+@media screen and (max-width: 438px) {
+    .todaysLog {
+        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    }
 }

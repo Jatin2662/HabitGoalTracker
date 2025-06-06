@@ -116,11 +116,4 @@
   cursor: pointer;
 }
 
-.save-btn {
-  padding: 0.4rem 0.7rem;
-  background: var(--btn-bg-color);
-  color: white;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-}
+/* .save-btn moved to app.css */

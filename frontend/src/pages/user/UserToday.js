@@ -40,6 +40,7 @@ function UserToday() {
             stopBell();
             setIsPlaying(false);
         }
+        setShow(true)
     };
 
     // const useKeyboardBindings = (map) => {
@@ -133,22 +134,12 @@ function UserToday() {
         dispatch(hideLoader())
     }
 
-    const [show, setShow] = useState(false)
+    const [show, setShow] = useState(false);
 
     useEffect(() => {
         getHabits();
         dispatch(hideNav("Today's Log"))
     }, [])
-
-    useEffect(() => {
-    if (data.some(dt => dt.status === 'pending')) {
-        const interval = setInterval(() => {
-            setShow(prev => !prev);
-        }, 3000);
-
-        return () => clearInterval(interval);
-    }
-}, [data]);
 
 
     return (
@@ -158,6 +149,10 @@ function UserToday() {
             </div>
             <div className={`surprise ${show ? "show" : "hide"}`}>
                 <img src={happy} />
+                <div className="surprise-box" >
+                    <p>I am watching you, complete the work.</p>
+                    <span onClick={() => setShow(false)} >Okay!</span>
+                </div>
             </div>
             <h1>{todayDate}</h1>
 

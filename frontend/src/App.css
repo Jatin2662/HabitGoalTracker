@@ -46,3 +46,12 @@ body {
   min-height: 100vh;
   overflow-y: auto;
 }
+
+.save-btn {
+  padding: 0.4rem 0.7rem;
+  background: var(--btn-bg-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
