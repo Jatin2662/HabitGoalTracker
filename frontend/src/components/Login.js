@@ -7,7 +7,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setTheme } from "../redux/slice/themeSlice";
 import { hideLoader, showLoader } from "../redux/slice/loaderSlice";
-
+import { showToast } from "../redux/slice/toastSlice";
 
 
 function LogIn() {
@@ -44,7 +44,7 @@ function LogIn() {
                 localStorage.setItem('loggedInUser', name)
                 // localStorage.setItem('role', role)
                 localStorage.setItem('email', email)
-                console.log("Login -> ",theme)
+                // console.log("Login -> ", theme)
                 // console.log(response);
                 dispatch(setTheme(theme))
                 // localStorage.setItem('theme', theme)
@@ -102,7 +102,7 @@ function LogIn() {
                 <button type="submit">Submit</button>
             </form>
 
-            <button>Sign Up with Google</button>
+            <button onClick={() => dispatch(showToast({ message: "Currently Unavailable, Work in Progress!", type: "success" }))} >Sign Up with Google</button>
         </section>
     );
 }

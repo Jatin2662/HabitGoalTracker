@@ -29,22 +29,22 @@ function SignUp() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         dispatch(showLoader('Please wait while we process'))
-        
+
         try {
             const url = 'http://localhost:8080/auth/signup';
             const response = await axios.post(url, formData);
-            
+
             const { message, success } = response.data;
-            
+
             dispatch(showToast({ message: message, type: success ? "success" : "error" }));
-            
+
             setFormData({
                 firstName: "",
                 lastName: "",
                 email: "",
                 password: ""
             })
-            
+
             dispatch(hideLoader())
             navigate('/auth/login')
         } catch (err) {
@@ -100,7 +100,7 @@ function SignUp() {
                 <button type="submit">Submit</button>
             </form>
 
-            <button>Sign Up with Google</button>
+            <button onClick={() => dispatch(showToast({ message: "Currently Unavailable, Work in Progress!", type: "success" }))} >Sign Up with Google</button>
         </section>
     );
 }
