@@ -17,7 +17,7 @@ function Contact({ setShowContact }) {
             <main className="contact-overlay">
                 <div className="c-o-h">
                     <span>Contact Us</span>
-                    <button onClick={close}>Close</button>
+                    <button onClick={close} className="save-btn" >Close</button>
                 </div>
 
                 <div>

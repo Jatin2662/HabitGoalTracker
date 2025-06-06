@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import '../styles/Root.css';
 import Contact from '../components/Contact';
 import { useNavigate } from 'react-router-dom';
+import { FaGithub } from "react-icons/fa";
+import { FaSquareFacebook } from "react-icons/fa6";
 
 function Root() {
 
@@ -70,8 +72,8 @@ function Root() {
                         <span onClick={()=> setShowContact(true)}>Contact</span>
                     </div>
                     <div className="footer-socials">
-                        <a href="https://github.com/Jatin2662" target="_blank">GitHub</a>
-                        <a href="https://facebook.com" target='_blank'>Facebook</a>
+                        <a href="https://github.com/Jatin2662" target="_blank"><span className='centered' ><FaGithub /></span><span>GitHub</span></a>
+                        <a href="https://facebook.com" target='_blank'><span className='centered' ><FaSquareFacebook /></span><span>Facebook</span></a>
                     </div>
                 </section>
                 <p>© 2025 Tracker. All rights reserved.</p>
