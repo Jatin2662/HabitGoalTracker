@@ -22,7 +22,7 @@ function Contact({ setShowContact }) {
 
                 <div>
                     <span><MdEmail /></span>
-                    <span>tracker@gmail.com</span>
+                    <a href="mailto:tracker3485@gmail.com">tracker3485@gmail.com</a>
                 </div>
 
                 <div>
