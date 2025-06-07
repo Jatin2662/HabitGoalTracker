@@ -85,8 +85,8 @@ function AdminUsers() {
                     <div key={user._id} className="user-table-row">
                         <span>{user.firstName} {user.lastName}</span>
                         <span>{user.email}</span>
-                        <span>{new Date(user.createdAt).toLocaleDateString()}</span>
-                        <span>{new Date(user.lastActive).toLocaleDateString()}</span>
+                        <span>{new Date(user.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</span>
+                        <span>{new Date(user.lastActive).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</span>
                         <button className="notify-btn" onClick={() => notify(user._id)}>
                             Notify
                         </button>
