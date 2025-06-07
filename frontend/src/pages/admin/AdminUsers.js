@@ -12,6 +12,8 @@ import { showLoader, hideLoader } from "../../redux/slice/loaderSlice";
 
 function AdminUsers() {
 
+    const baseURL = process.env.REACT_APP_BACKEND_URL;
+
     const dispatch = useDispatch();
     const [users, setUsers] = useState([]);
 
@@ -19,7 +21,7 @@ function AdminUsers() {
         dispatch(showLoader('Fetching all users.'))
 
         try {
-            const url = 'http://localhost:8080/admin/admin-users'
+            const url = `${baseURL}/admin/admin-users`;
             const headers = {
                 headers: {
                     'Authorization': localStorage.getItem('token')
@@ -40,7 +42,7 @@ function AdminUsers() {
     const notify = async (id) => {
         dispatch(showLoader('Sending email.'))
         try {
-            const url = 'http://localhost:8080/admin/admin-users'
+            const url = `${baseURL}/admin/admin-users`;
             const headers = {
                 headers: {
                     'Authorization': localStorage.getItem('token')

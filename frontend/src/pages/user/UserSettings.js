@@ -13,6 +13,8 @@ import { showLoader, hideLoader } from "../../redux/slice/loaderSlice";
 
 function UserSettings() {
 
+    const baseURL = process.env.REACT_APP_BACKEND_URL;
+
     const [userDetails, setUserDetails] = useState({
         firstName: '',
         lastName: '',
@@ -47,7 +49,7 @@ function UserSettings() {
         dispatch(showLoader('Fetching data.'))
 
         try {
-            const url = 'http://localhost:8080/user/user-settings'
+            const url = `${baseURL}/user/user-settings`;
             const headers = {
                 headers: {
                     'Authorization': localStorage.getItem('token')
@@ -103,7 +105,7 @@ function UserSettings() {
 
         try {
             const finalData = getModifiedFields(originalData.current, userDetails);
-            const url = 'http://localhost:8080/user/user-settings'
+            const url = `${baseURL}/user/user-settings`;
             const headers = {
                 headers: {
                     'Authorization': localStorage.getItem('token')

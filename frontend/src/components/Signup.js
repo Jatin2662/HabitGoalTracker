@@ -12,6 +12,8 @@ import { hideLoader, showLoader } from "../redux/slice/loaderSlice";
 
 function SignUp() {
 
+    const baseURL = process.env.REACT_APP_BACKEND_URL;
+
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
@@ -31,7 +33,7 @@ function SignUp() {
         dispatch(showLoader('Please wait while we process'))
 
         try {
-            const url = 'http://localhost:8080/auth/signup';
+            const url = `${baseURL}/auth/signup`;
             const response = await axios.post(url, formData);
 
             const { message, success } = response.data;

@@ -40,6 +40,8 @@ import { showToast } from "../redux/slice/toastSlice";
 
 function HabitForm({ setShowForm, onSuccess }) {
 
+    const baseURL = process.env.REACT_APP_BACKEND_URL;
+
     const [habitData, setHabitData] = useState({
         habit: '',
         habitDescription: '',
@@ -90,7 +92,7 @@ function HabitForm({ setShowForm, onSuccess }) {
                 state
             };
 
-            const url = 'http://localhost:8080/user/user-habits';
+            const url = `${baseURL}/user/user-habits`;
             const token = localStorage.getItem('token');
             const headers = {
                 headers: {

@@ -15,6 +15,8 @@ import DashboardCard from "../../components/DashboardCard";
 
 function UserDashboard() {
 
+    const baseURL = process.env.REACT_APP_BACKEND_URL;
+
     const userName = localStorage.getItem('loggedInUser') || 'Logger';
     const dispatch = useDispatch();
     const theme = useSelector((state) => state.theme.theme)
@@ -64,7 +66,7 @@ function UserDashboard() {
         dispatch(showLoader('Fetching data.'))
 
         try {
-            const url = 'http://localhost:8080/user/user-dashboard'
+            const url = `${baseURL}/user/user-dashboard`;
             const headers = {
                 headers: {
                     'Authorization': localStorage.getItem('token')

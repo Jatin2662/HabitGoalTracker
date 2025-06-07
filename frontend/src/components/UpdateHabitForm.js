@@ -56,6 +56,8 @@ import { useNavigate } from "react-router-dom";
 
 function UpdateHabitForm({ habitToUpdate, setUpdateHabit }) {
 
+    const baseURL = process.env.REACT_APP_BACKEND_URL;
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [habitToEdit, setHabitToEdit] = useState({
@@ -134,7 +136,7 @@ function UpdateHabitForm({ habitToUpdate, setUpdateHabit }) {
         const finalData = getUpdatedFields({ habitToUpdate, habitToEdit });
 
         try {
-            const url = `http://localhost:8080/user/user-habits/${habitToEdit._id}`
+            const url = `${baseURL}/user/user-habits/${habitToEdit._id}`
 
             const headers = {
                 headers: {

@@ -13,6 +13,9 @@ import { showLoader, hideLoader } from "../../redux/slice/loaderSlice";
 const localizer = momentLocalizer(moment);
 
 function UserTrack() {
+
+  const baseURL = process.env.REACT_APP_BACKEND_URL;
+
   const [habitLogs, setHabitLogs] = useState([]);
 
   const dispatch = useDispatch();
@@ -68,7 +71,7 @@ function UserTrack() {
   const getHabitData = async () => {
     dispatch(showLoader("Your habit logs are on the way. Hold tight!"))
     try {
-      const url = 'http://localhost:8080/user/user-track'
+      const url = `${baseURL}/user/user-track`;
       const headers = {
         headers: {
           'Authorization': localStorage.getItem('token')
@@ -113,7 +116,7 @@ function UserTrack() {
       status: log.status
     }));
     try {
-      const url = 'http://localhost:8080/user/user-track'
+      const url = `${baseURL}/user/user-track`;
       const headers = {
         headers: {
           'Authorization': localStorage.getItem('token')

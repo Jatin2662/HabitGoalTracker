@@ -14,6 +14,8 @@ import happy from '../../assets/image/happy.webp'
 
 function UserToday() {
 
+    const baseURL = process.env.REACT_APP_BACKEND_URL;
+
     const dispatch = useDispatch()
     const todayDate = useMemo(() => new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }))
 
@@ -88,7 +90,7 @@ function UserToday() {
         try {
             const date = new Date();
             const formattedDate = date.toISOString().split("T")[0];
-            const url = `http://localhost:8080/user/user-today?date=${formattedDate}`
+            const url = `${baseURL}/user/user-today?date=${formattedDate}`
             const headers = {
                 headers: {
                     'Authorization': localStorage.getItem('token')
@@ -117,7 +119,7 @@ function UserToday() {
                     status: dt.status
                 }
             })
-            const url = 'http://localhost:8080/user/user-today';
+            const url = `${baseURL}/user/user-today`;
             const headers = {
                 headers: {
                     'Authorization': localStorage.getItem('token')

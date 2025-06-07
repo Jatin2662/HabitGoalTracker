@@ -11,6 +11,8 @@ import { showToast } from "../redux/slice/toastSlice";
 
 function DeleteHabit({ setDeleteDialoge, habitToDelete }) {
 
+    const baseURL = process.env.REACT_APP_BACKEND_URL;
+
     const [habitName, setHabitName] = useState('');
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -22,7 +24,7 @@ function DeleteHabit({ setDeleteDialoge, habitToDelete }) {
 
         const habitId = habitToDelete._id;
         try {
-            const url = `http://localhost:8080/user/user-habits/${habitId}`
+            const url = `${baseURL}/user/user-habits/${habitId}`
             const headers = {
                 headers: {
                     'Authorization': localStorage.getItem('token')

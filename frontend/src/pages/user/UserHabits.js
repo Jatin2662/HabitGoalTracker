@@ -29,6 +29,8 @@ function HabitCardItem({ title, content }) {
 
 function UserHabits() {
 
+    const baseURL = process.env.REACT_APP_BACKEND_URL;
+
     const userName = localStorage.getItem('loggedInUser') || 'Logger';
     const dispatch = useDispatch();
     const [showForm, setShowForm] = useState(false);
@@ -46,7 +48,7 @@ function UserHabits() {
     const getHabits = async () => {
         dispatch(showLoader('Fetching data.'))
         try {
-            const url = `http://localhost:8080/user/user-habits?status=${state}`
+            const url = `${baseURL}/user/user-habits?status=${state}`
 
             const response = await axios.get(url, {
                 headers: {

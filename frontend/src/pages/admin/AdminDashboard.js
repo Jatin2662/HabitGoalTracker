@@ -10,6 +10,8 @@ import { useState } from "react";
 import { showLoader, hideLoader } from "../../redux/slice/loaderSlice";
 
 function AdminDashboard() {
+
+    const baseURL = process.env.REACT_APP_BACKEND_URL;
     const dispatch = useDispatch();
     const [totalUsers, setTotalUsers] = useState(0)
     const [activeUsers, setActiveUsers] = useState(0)
@@ -43,7 +45,7 @@ function AdminDashboard() {
         dispatch(showLoader('Fetching data.'))
         try {
             
-            const url = 'http://localhost:8080/admin/admin-dashboard';
+            const url = `${baseURL}/admin/admin-dashboard`;
             const headers = {
                 headers: {
                     'Authorization': localStorage.getItem('token')

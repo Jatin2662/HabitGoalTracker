@@ -12,6 +12,8 @@ import { showToast } from "../redux/slice/toastSlice";
 
 function LogIn() {
 
+    const baseURL = process.env.REACT_APP_BACKEND_URL;
+
     const [formData, setFormData] = useState({
         email: "",
         password: ""
@@ -34,7 +36,7 @@ function LogIn() {
         const { email, password } = formData;
 
         try {
-            const url = 'http://localhost:8080/auth/login';
+            const url = `${baseURL}/auth/login`;
             const response = await axios.post(url, formData);
 
             const { message, success, jwtToken, email, name, error, theme } = response.data;

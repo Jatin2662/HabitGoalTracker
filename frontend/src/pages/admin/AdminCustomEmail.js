@@ -18,6 +18,8 @@ function AdminCustomEmail() {
     // Then if there is doc update input fields, then chencking again if on get there was a document I set mailId and can just update the existing doc.
     // and if no doc then no mailId will be set so it will be empty and if empty then method will be post so we can add a new document(Happy) 
 
+    const baseURL = process.env.REACT_APP_BACKEND_URL;
+
     const dispatch = useDispatch();
 
     let mailDataCopy = {};
@@ -44,7 +46,7 @@ function AdminCustomEmail() {
 
         try {
 
-            const url = 'http://localhost:8080/admin/admin-setCustomEmail'
+            const url = `${baseURL}/admin/admin-setCustomEmail`;
             // const headers = {
             //     headers: {
             //         'Authorization': localStorage.getItem('token')
@@ -88,7 +90,7 @@ function AdminCustomEmail() {
     const getMailContent = async () => {
         dispatch(showLoader('Fetching Mail content.'))
         try {
-            const url = 'http://localhost:8080/admin/admin-setCustomEmail'
+            const url = `${baseURL}/admin/admin-setCustomEmail`;
             const headers = {
                 headers: {
                     'Authorization': localStorage.getItem('token')
