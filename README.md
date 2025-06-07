@@ -56,3 +56,35 @@
 2. Use of **Cookies**, **Session Storage** - for persistent and secure sessions
 3. Caching - to improve **Performance**
 4. 
+
+## Live Demo link
+
+[View the live website](https://habitgoaltracker-1.onrender.com)
+
+## Screenshots
+
+### Home Page
+
+![Home Page](screenshots/home1.png)
+![Home Page](screenshots/home2.png)
+
+### Authentication Page
+
+![LogIn](screenshots/auth.png)
+![SignUp](screenshots/auth2.png)
+
+
+### User Pages
+
+![Dashboard](screenshots/dashboard.png)
+![Habits](screenshots/habits.png)
+![Today's Logs](screenshots/todayLog.png)
+![Track](screenshots/track.png)
+
+
+### Admin Pages
+
+![Admin + Side navbar](screenshots/admin.png)
+![Admin Dashboard](screenshots/admin_dashboard.png)
+![Admin Users](screenshots/adminUsers.png)
+![Admin set Email](screenshots/adminEmail.png)
