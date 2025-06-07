@@ -9,8 +9,9 @@ import axios from 'axios';
 import useSound from 'use-sound';
 import '../../styles/UserToday.css'
 import drum2 from '../../assets/sound/drum2.mp3'
-import happy from '../../assets/image/happy.webp'
-import minion from '../../assets/image/minion.png'
+// import happy from '../../assets/image/happy.webp'
+// import minion from '../../assets/image/minion.png'
+import boy from '../../assets/image/boy.png';
 
 
 function UserToday() {
@@ -151,7 +152,7 @@ function UserToday() {
                 {isPlaying ? 'Pause Mood' : 'Set Mood'}
             </div>
             <div className={`surprise ${show ? "show" : "hide"}`}>
-                <img src={minion} />
+                <img src={boy} />
                 <div className="surprise-box" >
                     <p>I am watching you, complete the work.</p>
                     <span onClick={() => setShow(false)} >Okay!</span>
