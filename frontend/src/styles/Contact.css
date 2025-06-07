@@ -1,5 +1,3 @@
-
-
 .contact {
     position: fixed;
     top: 0;
@@ -18,18 +16,18 @@
     max-width: 400px;
     width: 50%;
     background-color: rgb(187, 236, 255);
-    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     padding: 10px;
     border-radius: 7px;
 }
 
-.c-o-h{
+.c-o-h {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.contact-overlay div{
+.contact-overlay div {
     display: flex;
     align-items: center;
     /* justify-content: center; */
@@ -40,4 +38,11 @@
 .contact-overlay svg {
     font-size: 20px;
     vertical-align: middle;
+}
+
+
+@media screen and (max-width: 530px) {
+    .contact-overlay {
+        width: 70vw;
+    }
 }

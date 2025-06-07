@@ -3,29 +3,30 @@
   color: var(--text-primary);
 }
 
-.user-track h2{
+.user-track h2 {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.color-block{
+.color-block {
   font-size: 0.7em;
   font-weight: 400;
   text-justify: center;
 }
 
-.color-block span{
+.color-block span {
   padding: 3px 7px;
   border-radius: 7px;
   color: var(--font-color);
   cursor: pointer;
 }
 
-.color-block span:nth-child(1){
+.color-block span:nth-child(1) {
   background-color: #065f96;
 }
-.color-block span:nth-child(2){
+
+.color-block span:nth-child(2) {
   background-color: #991b3c;
 }
 
@@ -117,3 +118,12 @@
 }
 
 /* .save-btn moved to app.css */
+
+
+@media screen and (max-width: 545px) {
+  .color-block {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+}
