@@ -76,7 +76,8 @@ function LogIn() {
 
     return (
         <section className="login centered">
-            <h1>Get Started</h1>
+            <h1><span>Get Started </span><Link to="/auth/verify">Verify Email</Link> </h1>
+
             <div className="login-msg">{message}</div>
             <div className="login-switch">
                 <span>New User?</span>
