@@ -28,7 +28,7 @@
 - Full CRUD Operations for habits
 - Filtering
 - Nodemailer to notify users
-
+- Email verification using Nodemailer
 
 2. Frontend
 - React Calendar
@@ -52,10 +52,9 @@
 
 ## Future Scope
 
-1. Email verification using `Nodemailer`
-2. Use of **Cookies**, **Session Storage** - for persistent and secure sessions
-3. Caching - to improve **Performance**
-4. 
+1. Use of **Cookies**, **Session Storage** - for persistent and secure sessions
+2. Caching - to improve **Performance**
+ 
 
 ## Live Demo link
 
