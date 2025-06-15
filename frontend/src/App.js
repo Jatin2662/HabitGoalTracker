@@ -27,6 +27,7 @@ import MainHome from './pages/MainHome';
 import Loader from './components/Loader';
 import UserToday from './pages/user/UserToday';
 import { lazy, Suspense } from 'react';
+import EmailVerification from './components/EmailVerification';
 
 const UserTrack = lazy(() => import('./pages/user/UserTrack'))
 
@@ -59,6 +60,7 @@ function App() {
           <Route index element={<LogIn />} />
           <Route path="login" element={<LogIn />} />
           <Route path="signup" element={<SignUp />} />
+          <Route path="verify/:token?" element={<EmailVerification />} />
         </Route>
 
         <Route path='/user' element={<ProtectedRoutes allowedRoles={['user', 'admin']} />} >
