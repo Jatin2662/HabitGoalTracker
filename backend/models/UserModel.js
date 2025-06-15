@@ -27,6 +27,10 @@ const userSchema = new Schema({
     lastActive:{
         type: Date
     },
+    isVerified:{
+        type: Boolean,
+        default: false
+    },
     theme: {
         type: String,
         enum: ['light', 'dark'],
