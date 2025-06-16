@@ -84,7 +84,7 @@ const verifyEmail = async (req, res, next) => {
 
 const EmailVerification = async (req, res, next) => {
     try {
-        const { email } = req.body;
+        const { email, linkName } = req.body;
 
         const user = await UserModel.findOne({ email });
 
@@ -96,12 +96,81 @@ const EmailVerification = async (req, res, next) => {
             { expiresIn: '15min' }
         )
 
-        const verificationLink = `https://habitgoaltracker-1.onrender.com/auth/verify/${token}`
+        let verificationLink;
+        if (linkName === 'verify') {
+            verificationLink = `https://habitgoaltracker-1.onrender.com/auth/verify/${token}`
+        } else if (linkName === 'reset-password') {
+            verificationLink = `https://habitgoaltracker-1.onrender.com/auth/reset-password/${token}`
+        } else {
+            return res.status(400).json({ message: "Invalid request.", success: false })
+        }
 
-        SendVerificationMail(email, verificationLink)
+        SendVerificationMail(email, verificationLink, linkName)
 
-        res.status(200).json({ message: "Email has been sent, verify to continue.", success: true })
+        res.status(200).json({ message: `Email has been sent, ${linkName} to continue.`, success: true })
     } catch (err) {
+        res.status(500).json({ message: "Internal Server Error", success: false })
+    }
+}
+
+const getPasswordChangeRequest = async (req, res, next) => {
+    try {
+        const { token } = req.params;
+
+        if (!token) {
+            return res.status(403).json({ message: "Send Link to reset password.", success: false })
+        }
+
+        let decoded;
+        try {
+            decoded = jwt.verify(token, process.env.JWT_SECRET)
+        } catch (err) {
+            return res.status(400).json({ message: "Invalid or expired token.", success: false });
+        }
+
+        const user = await UserModel.findById(decoded._id).select('email').lean();
+
+        if (!user) {
+            return res.status(400).json({ message: "User not found.", success: false })
+        }
+
+        res.status(200).json({ message: "Proceed to reset the password.", success: true, user })
+
+    } catch (err) {
+        res.status(500).json({ message: "Internal Server Error", success: false })
+    }
+}
+
+const resetPassword = async (req, res, next) => {
+
+    try{
+        const { token } = req.params;
+        const { password, confirmPassword } = req.body;
+
+        if(password !== confirmPassword){
+            return res.status(400).json({ message: "passwords does not match.", success: false })
+        }
+
+        let decoded;
+        try {
+            decoded = jwt.verify(token, process.env.JWT_SECRET)
+        } catch (err) {
+            return res.status(400).json({ message: "Invalid or expired token.", success: false });
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const user = await UserModel.findByIdAndUpdate(
+            decoded._id,
+            { $set: {password: hashedPassword} },
+            { new: true }
+        );
+
+        await user.save();
+
+        res.status(200).json({ message: "Password updated successfully.", success: true })
+
+    }catch(err){
         res.status(500).json({ message: "Internal Server Error", success: false })
     }
 }
@@ -155,5 +224,7 @@ module.exports = {
     signup,
     login,
     verifyEmail,
-    EmailVerification
+    EmailVerification,
+    getPasswordChangeRequest,
+    resetPassword
 }
