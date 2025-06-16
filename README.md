@@ -29,6 +29,7 @@
 - Filtering
 - Nodemailer to notify users
 - Email verification using Nodemailer
+- Rest password
 
 2. Frontend
 - React Calendar
@@ -71,6 +72,9 @@
 
 ![LogIn](screenshots/auth.png)
 ![SignUp](screenshots/auth2.png)
+![EmailVerify](screenshots/emailVerification.png)
+![ResetPassword](screenshots/resetPassword.png)
+![ResetPassword2](screenshots/resetPassword2.png)
 
 
 ### User Pages
