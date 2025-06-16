@@ -3,7 +3,7 @@
 const nodemailer = require('nodemailer')
 
 
-const SendVerificationMail = async (email, verificationLink) => {
+const SendVerificationMail = async (email, verificationLink, linkName) => {
 
     const transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -26,8 +26,8 @@ const SendVerificationMail = async (email, verificationLink) => {
           <tr>
             <td style="padding: 20px;">
               <h2 style="margin-top: 0;">Hey, ${email}!</h2>
-              <p>Verification is neccessary to get notifications. </p>
-              <p>Verify email, <strong>Go</strong>, click to verify <a href="${verificationLink}" >${verificationLink}</a></p>
+              <p>Verification is neccessary to ${linkName === 'verify' ? 'get notifications' : 'reset password'}. </p>
+              <p>Verify email, <strong>Go</strong>, click to ${linkName} <a href="${verificationLink}" >${verificationLink}</a></p>
               <h4>Happy Tracking!</h4>
             </td>
           </tr>
@@ -44,7 +44,7 @@ const SendVerificationMail = async (email, verificationLink) => {
         from: process.env.EMAIL,
         to: email,
         replyTo: process.env.EMAIL,
-        subject: "This email is intended for only verification purpose.",
+        subject: `This email is intended for ${linkName === 'verify' ? 'only verification' : linkName === 'reset-password' ? 'password update' : 'no'} purpose.`,
         html
     }
 
