@@ -106,6 +106,7 @@ function LogIn() {
             </form>
 
             <button onClick={() => dispatch(showToast({ message: "Currently Unavailable, Work in Progress!", type: "success" }))} >Sign Up with Google</button>
+            <span onClick={() => navigate("/auth/reset-password", { replace: true })} className="forgot-password" >Forgot Password?</span>
         </section>
     );
 }
