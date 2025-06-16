@@ -67,3 +67,16 @@
     color: var(--btn-bg-color);
     background-color: white;
 }
+
+.forgot-password{
+    cursor: pointer;
+    align-self: flex-start;
+    color: var(--btn-bg-color);
+    text-decoration: underline;
+}
+
+.myEmail{
+    font-size: 1.1em;
+    font-weight: 500;
+    color: var(--btn-bg-color);
+}
