@@ -28,6 +28,7 @@ import Loader from './components/Loader';
 import UserToday from './pages/user/UserToday';
 import { lazy, Suspense } from 'react';
 import EmailVerification from './components/EmailVerification';
+import ResetPassword from './components/ResetPassword';
 
 const UserTrack = lazy(() => import('./pages/user/UserTrack'))
 
@@ -61,6 +62,7 @@ function App() {
           <Route path="login" element={<LogIn />} />
           <Route path="signup" element={<SignUp />} />
           <Route path="verify/:token?" element={<EmailVerification />} />
+          <Route path="reset-password/:token?" element={<ResetPassword />} />
         </Route>
 
         <Route path='/user' element={<ProtectedRoutes allowedRoles={['user', 'admin']} />} >
