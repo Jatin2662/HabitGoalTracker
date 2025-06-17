@@ -50,7 +50,18 @@ function SignUp() {
             dispatch(hideLoader())
             navigate('/auth/login')
         } catch (err) {
-            dispatch(showToast({ message: err.message + ', ' + err.response?.data?.message + ', ' + err.status, type: "error" }));
+            dispatch(hideLoader());
+
+            if (err.response?.status === 409) {
+                dispatch(showToast({
+                    message: "User already exists. Redirecting to login...",
+                    type: "success"
+                }));
+                navigate('/auth/login');
+            } else {
+                const errorMessage = err.response?.data?.message || "Something went wrong. Please try again.";
+                dispatch(showToast({ message: errorMessage, type: "error" }));
+            }
         }
     }
 
