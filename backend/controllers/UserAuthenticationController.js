@@ -41,7 +41,7 @@ const signup = async (req, res, next) => {
 
         const verificationLink = `https://habitgoaltracker-1.onrender.com/auth/verify/${token}`
 
-        SendVerificationMail(email, verificationLink)
+        SendVerificationMail(email, verificationLink, linkName = 'verify')
 
         res.status(201).json({ message: "User Created and Email has been sent, verify to login.", success: true });
 
